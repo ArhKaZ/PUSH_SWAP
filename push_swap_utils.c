@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/08 16:39:00 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/09 21:05:54 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft.h"
+#include "libft/libft.h"
 
 void	sa(t_stack *stack_a)
 {
@@ -85,4 +85,36 @@ void	rb(t_stack *stack_b)
 		stack_b = stack_b->next;
 	stack_b->next = second;
 	first->next = NULL;
+}
+
+void	rr(t_stack *stack_a, t_stack *stack_b)
+{
+	ra(stack_a);
+	rb(stack_b);
+}
+
+void	rra(t_stack *stack_a)
+{
+	t_stack *first;
+
+	first = stack_a;
+	while (stack_a->next != NULL)
+		stack_a = stack_a->next;
+	stack_a->next = first;
+}
+
+void	rrb(t_stack *stack_b)
+{
+	t_stack *first;
+
+	first = stack_b;
+	while (stack_b->next != NULL)
+		stack_b = stack_b->next;
+	stack_b->next = first;
+}
+
+void	rrr(t_stack *stack_a, t_stack *stack_b)
+{
+	rra(stack_a);
+	rrb(stack_b);
 }
