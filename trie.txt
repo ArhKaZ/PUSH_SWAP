@@ -22,3 +22,5 @@ puis à trier chacune des sous-piles de manière récursive en utilisant le mêm
 On fusionne ensuite les deux sous-piles triées pour obtenir la pile triée finale.
 Le tri fusion est généralement plus lent que le tri rapide,
 mais peut être plus facile à implémenter.
+
+algorithme qui permet de trier une pile de nombre a l'aide d'une autre pile, de façon optimisé avec comme seuls instructions inversion des deux premiers nombres d'une pile, l'envoie du premier nombre d'une pile a l'autre ou le décalage vers le haut ou le bas des piles
