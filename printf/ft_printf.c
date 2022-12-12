@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:38:05 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/08 14:20:54 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/10 13:37:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_printf(const char *str, ...)
 		{
 			if (str[i + 1] == '\0')
 				return (bo);
-				bo += ft_argu(str[i + 1], args);
+			bo += ft_argu(str[i + 1], args);
 			i += 2;
 		}
 		else
