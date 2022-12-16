@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:58:42 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/11 16:22:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:13:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
 # include <stdlib.h>
+
 typedef struct s_stack
 {
 	int			value;
+	int			pos_mid;
+	int			chunk;
+	int			index_chunk;
 	struct s_stack	*next;
 }					t_stack;
 

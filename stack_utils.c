@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/11 16:22:00 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:21:43 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ t_stack	*create_empty_stack(void)
 	if (!stack_to_return)
 		return (NULL);
 	stack_to_return->value = 0;
+	stack_to_return->pos_mid = 0;
+	stack_to_return->chunk = 0;
+	stack_to_return->index_chunk = 0;
 	stack_to_return->next = NULL;
 	return (stack_to_return);
 }
@@ -77,7 +80,7 @@ void	fill_stack(int stack[], int len, t_stack **stack_a)
 		if (!new)
 			return ;
 		new->value = stack[i];
-		new->next = NULL;
+	//	new->next = NULL;
 		stack_add_back(stack_a, new);
 		i++;
 	}

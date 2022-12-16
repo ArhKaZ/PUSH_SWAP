@@ -3,47 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/11 16:16:51 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/14 14:59:32 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "Libft/libft.h"
+#include "libft/libft.h"
 #include "printf/ft_printf.h"
 
-int	find_little_nb(t_stack **stack_a)
-{
-	int little;
-	int place;
-	int little_place;
 
-	place = 0;
-	little = (*stack_a)->value;
-	while ((*stack_a) != NULL)
-	{
-		(*stack_a) = (*stack_a)->next;
-		place++;
-		if ((*stack_a)->value < little)
-		{
-			little = (*stack_a)->value;
-			little_place = place;
-		}
-	}
-	return (little_place);
-}
-
-// void	sort_little_stack(t_stack *stack_a, t_stack *stack_b)
-// {
-// 	//int	change_place;
-// 	while (stack_a != NULL)
-// 	{
-// 		change_place = find_little_nb(&stack_a);
-
-// 	}
-// }
 void	print_stack(t_stack *stack)
 {
 	t_stack *first;
@@ -51,51 +22,152 @@ void	print_stack(t_stack *stack)
 	first = stack;
 		while (stack != NULL)
 		{
-			ft_printf("%d", stack->value);
+			ft_printf("%d ", stack->value);
 			stack = stack->next;
 		}
 		ft_printf("\n");
 		stack = first;
 }
 
+void	print_tab(int stack[], int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_printf("[%d]", stack[i]);
+		i++;
+	}
+}
+
+int	*sort_tab_int(int stack[], int len)
+{
+	int i;
+	int j;
+	int temp;
+
+	i = 0;
+	while (i < len)
+	{
+		j = 0;
+		while (j < len)
+		{
+			if (stack[j] > stack[i])
+			{
+				temp = stack[j];
+				stack[j] = stack[i];
+				stack[i] = temp;
+			}
+			else
+				j++;
+		}
+		i++;
+	}
+	return (stack);
+}
+
+int		len_stack(t_stack **stack)
+{
+	int len;
+	t_stack *first;
+
+	first = *stack;
+	len = 0;
+	while (*stack != NULL)
+	{
+		len++;
+		*stack = (*stack)->next;
+	}
+	*stack = first;
+	return (len);
+}
+
+void	put_pivot(t_stack **stack, int mid)
+{
+	t_stack *first;
+
+	first = *stack;
+	ft_printf("mid = %d\n", mid);
+	while (*stack != NULL)
+	{
+		if (((*stack)->value) >= mid)
+		{
+			ft_printf("1 %d ", (*stack)->value);
+			(*stack)->pos_mid = 1;
+		}
+		if (((*stack)->value) < mid)
+		{
+			ft_printf("0 %d ", (*stack)->value);
+			(*stack)->pos_mid = 0;
+		}
+		*stack = (*stack)->next;
+	}
+	*stack = first;
+}
+
+int		stack_is_split(t_stack **stack)
+{
+	t_stack *first;
+
+	first = *stack;
+	while (*stack != NULL)
+	{
+		if ((*stack)->pos_mid == 0)
+		{
+			*stack = first;
+			return 0;
+		}
+		*stack = (*stack)->next;
+	}
+	*stack = first;
+	return (1);
+}
+void	split_at_mid(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack *first;
+	int test;
+
+	test = 0;
+	first = *stack_a;
+	while (test == 0)
+	{
+		if ((*stack_a)->pos_mid == 0)
+			pb(stack_a, stack_b);
+		else
+			ra(stack_a);
+		test = stack_is_split(stack_a);
+	}
+	print_stack(*stack_b);
+	print_stack(*stack_a);
+}
+void	sort_desc(t_stack **stack)
+{
+	
+}
+
+void	sort_stack(t_stack **stack_a, t_stack **stack_b, int mid)
+{
+	put_pivot(stack_a, mid);
+	split_at_mid(stack_a, stack_b);
+}
+
+
 void	push_swap(int stack[], int len)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
+	int mid;
 
 	stack_a = NULL;
 	stack_b = NULL;
-	(void)stack_b;
+
 	fill_stack(stack, len, &stack_a);
-	//stack_b = create_empty_stack();
-	ft_printf("1/ \n");
-	print_stack(stack_a);
-	pb(&stack_a, &stack_b);
-	pb(&stack_a, &stack_b);
-	pb(&stack_a, &stack_b);
-	pb(&stack_a, &stack_b);
-	ft_printf("2/ \n");
-	print_stack(stack_a);
-	print_stack(stack_b);
-	ft_printf("3/ \n");
-	ss(stack_a, stack_b);
-	print_stack(stack_a);
-	print_stack(stack_b);
-	ft_printf("4/ \n");
-	rr(&stack_a, &stack_b);
-	print_stack(stack_a);
-	print_stack(stack_b);
-	ft_printf("5/ \n");
-	rrr(&stack_a, &stack_b);
-	print_stack(stack_a);
-	print_stack(stack_b);
-	pa(&stack_a, &stack_b);
-	pa(&stack_a, &stack_b);
-	pa(&stack_a, &stack_b);
-	pa(&stack_a, &stack_b);
-	print_stack(stack_a);
-	print_stack(stack_b);
+	sort_tab_int(stack, len);
+	mid = stack[(len / 2)];
+	sort_stack(&stack_a, &stack_b, mid);
 }
+
 
 int main(int argc, char **argv)
 {
