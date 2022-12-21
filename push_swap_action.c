@@ -80,6 +80,9 @@ void	pb(t_stack **stack_a, t_stack **stack_b)
 			return ;
 		temp->value = (*stack_a)->value;
 		temp->next = NULL;
+        temp->pos_mid = (*stack_a)->pos_mid;
+        temp->chunk = (*stack_a)->chunk;
+        temp->index_chunk = (*stack_a)->index_chunk;
 		stack_add_front(stack_b, temp);
 		free((*stack_a));
 		(*stack_a) = first;

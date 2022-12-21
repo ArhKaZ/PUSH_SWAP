@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/14 14:59:32 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:58:17 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ void	print_stack(t_stack *stack)
 		while (stack != NULL)
 		{
 			ft_printf("%d ", stack->value);
+			stack = stack->next;
+		}
+		ft_printf("\n");
+		stack = first;
+}
+
+void	print_chunk_and_index(t_stack *stack)
+{
+	t_stack *first;
+
+	first = stack;
+		while (stack != NULL)
+		{
+			ft_printf("[%d/%d/%d/%d] ", stack->value, stack->pos_mid, stack->chunk, stack->index_chunk);
 			stack = stack->next;
 		}
 		ft_printf("\n");
@@ -83,75 +97,43 @@ int		len_stack(t_stack **stack)
 	return (len);
 }
 
-void	put_pivot(t_stack **stack, int mid)
+void    push_on_b(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack *first;
+    int len;
 
-	first = *stack;
-	ft_printf("mid = %d\n", mid);
-	while (*stack != NULL)
-	{
-		if (((*stack)->value) >= mid)
-		{
-			ft_printf("1 %d ", (*stack)->value);
-			(*stack)->pos_mid = 1;
-		}
-		if (((*stack)->value) < mid)
-		{
-			ft_printf("0 %d ", (*stack)->value);
-			(*stack)->pos_mid = 0;
-		}
-		*stack = (*stack)->next;
-	}
-	*stack = first;
+    len = len_chunk(*stack_a, *stack_a, (*stack_a)->chunk);
+    if (len == 1)
+        pb(stack_a, stack_b);
+    if (len == 2)
+    {
+        pb(stack_a, stack_b);
+        pb(stack_a, stack_b);
+    }
+    if (len == 3)
+    {
+        pb(stack_a, stack_b);
+        pb(stack_a, stack_b);
+        pb(stack_a, stack_b);
+    }
 }
 
-int		stack_is_split(t_stack **stack)
+void    sort_first_cat(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack *first;
+    push_on_b(stack_a, stack_b);
 
-	first = *stack;
-	while (*stack != NULL)
-	{
-		if ((*stack)->pos_mid == 0)
-		{
-			*stack = first;
-			return 0;
-		}
-		*stack = (*stack)->next;
-	}
-	*stack = first;
-	return (1);
 }
-void	split_at_mid(t_stack **stack_a, t_stack **stack_b)
-{
-	t_stack *first;
-	int test;
-
-	test = 0;
-	first = *stack_a;
-	while (test == 0)
-	{
-		if ((*stack_a)->pos_mid == 0)
-			pb(stack_a, stack_b);
-		else
-			ra(stack_a);
-		test = stack_is_split(stack_a);
-	}
-	print_stack(*stack_b);
-	print_stack(*stack_a);
-}
-void	sort_desc(t_stack **stack)
-{
-	
-}
-
 void	sort_stack(t_stack **stack_a, t_stack **stack_b, int mid)
 {
-	put_pivot(stack_a, mid);
-	split_at_mid(stack_a, stack_b);
+    put_pivot(stack_a, mid);
+    //split_at_mid(stack_a, stack_b);
+    //while (chunk_are_good(*stack_b) != 1)
+        //split_in_chunk(stack_b);
+    while (chunk_are_good(*stack_a) != 1)
+        split_in_chunk(stack_a);
+    print_chunk_and_index(*stack_a);
+    sort_first_cat(stack_a, stack_b);
+    print_chunk_and_index(*stack_b);
 }
-
 
 void	push_swap(int stack[], int len)
 {

@@ -56,4 +56,14 @@ void	rrb(t_stack **stack_b);
 void	rrr(t_stack **stack_a, t_stack **stack_b);
 
 void	print_stack(t_stack *stack);
+
+void	put_pivot(t_stack **stack, int mid);
+
+void	split_at_mid(t_stack **stack_a, t_stack **stack_b);
+
+int     chunk_are_good(t_stack *stack);
+
+void	split_in_chunk(t_stack **stack);
+
+int		len_chunk(t_stack *stack, t_stack *first, int chunk);
 #endif

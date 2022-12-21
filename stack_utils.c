@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/14 13:21:43 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/21 11:06:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_stack	*create_empty_stack(void)
 		return (NULL);
 	stack_to_return->value = 0;
 	stack_to_return->pos_mid = 0;
-	stack_to_return->chunk = 0;
-	stack_to_return->index_chunk = 0;
+	stack_to_return->chunk = -1;
+	stack_to_return->index_chunk = -1;
 	stack_to_return->next = NULL;
 	return (stack_to_return);
 }
