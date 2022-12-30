@@ -6,22 +6,31 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:58:42 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/14 13:13:55 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:08:48 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
 # include <stdlib.h>
+#include "printf/ft_printf.h"
 
 typedef struct s_stack
 {
 	int			value;
-	int			pos_mid;
 	int			chunk;
-	int			index_chunk;
+	int			l_chunk;
+	struct s_stack	*before;
 	struct s_stack	*next;
 }					t_stack;
+
+typedef enum e_bool
+{
+    false,
+    true
+}              t_bool;
+
+void	go_on_top(t_stack **stack);
 
 t_stack	*create_empty_stack(void);
 
@@ -55,15 +64,36 @@ void	rrb(t_stack **stack_b);
 
 void	rrr(t_stack **stack_a, t_stack **stack_b);
 
+void    choose_sort_tec(t_stack **stack);
+
+void    sort_four(t_stack **stack_a, t_stack **stack_b);
+
+void    sort_five(t_stack **stack_a, t_stack **stack_b);
+
+void    sort_middle_stack(t_stack **stack_a, t_stack **stack_b, int len, int sort_tab[]);
+
 void	print_stack(t_stack *stack);
 
 void	put_pivot(t_stack **stack, int mid);
 
-void	split_at_mid(t_stack **stack_a, t_stack **stack_b);
+void	split_at_mid(t_stack **stack_a, t_stack **stack_b, int pos);
 
 int     chunk_are_good(t_stack *stack);
 
-void	split_in_chunk(t_stack **stack);
+void    give_chunk(t_stack **stack_a, int len, int sort_tab[]);
 
-int		len_chunk(t_stack *stack, t_stack *first, int chunk);
+void	split_in_chunk(t_stack **stack, int pos);
+
+int		len_chunk(t_stack **stack, int chunk);
+
+int		len_stack(t_stack **stack);
+
+int	    *sort_tab_int(int stack[], int len);
+
+void    sort_chunk(t_stack **stack);
+
+void	print_chunk_and_index(t_stack *stack);
+
+void    push_little(t_stack **stack_a, t_stack **stack_b);
+
 #endif

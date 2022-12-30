@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/11 13:34:52 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/12 13:19:59 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:29:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ void	pa(t_stack **stack_a, t_stack **stack_b)
 	t_stack *temp;
 
 	ft_printf("pa\n");
-	first = (*stack_b)->next;
+	if ((*stack_b)->next != NULL)
+	{
+		first = (*stack_b)->next;
+		first->before = NULL;
+	}
+	else
+		first = NULL;
 	if (!(*stack_b == NULL))
 	{
 		temp = create_empty_stack();
@@ -60,6 +66,8 @@ void	pa(t_stack **stack_a, t_stack **stack_b)
 			return ;
 		temp->value = (*stack_b)->value;
 		temp->next = NULL;
+		temp->chunk = (*stack_b)->chunk;
+		temp->l_chunk = (*stack_b)->l_chunk;
 		stack_add_front(stack_a, temp);
 		free((*stack_b));
 		(*stack_b) = first;
@@ -73,6 +81,7 @@ void	pb(t_stack **stack_a, t_stack **stack_b)
 
 	ft_printf("pb\n");
 	first = (*stack_a)->next;
+	first->before = NULL;
 	if (!(*stack_a == NULL))
 	{
 		temp = create_empty_stack();
@@ -80,9 +89,8 @@ void	pb(t_stack **stack_a, t_stack **stack_b)
 			return ;
 		temp->value = (*stack_a)->value;
 		temp->next = NULL;
-        temp->pos_mid = (*stack_a)->pos_mid;
         temp->chunk = (*stack_a)->chunk;
-        temp->index_chunk = (*stack_a)->index_chunk;
+        temp->l_chunk = (*stack_a)->l_chunk;
 		stack_add_front(stack_b, temp);
 		free((*stack_a));
 		(*stack_a) = first;
@@ -97,10 +105,12 @@ void	ra(t_stack **stack_a)
 	ft_printf("ra\n");
 	first = (*stack_a);
 	second = (*stack_a)->next;
-	(*stack_a) = stack_last((*stack_a));
+	second->before = NULL;
+	*stack_a = stack_last((*stack_a));
 	first->next = NULL;
+	first->before = *stack_a;
 	(*stack_a)->next = first;
-	(*stack_a) = second;
+	*stack_a = second;
 }
 
 void	rb(t_stack **stack_b)
@@ -111,8 +121,9 @@ void	rb(t_stack **stack_b)
 	ft_printf("rb\n");
 	first = (*stack_b);
 	second = (*stack_b)->next;
-	(*stack_b) = stack_last((*stack_b));
+	(*stack_b) = stack_last(*stack_b);
 	first->next = NULL;
+	first->before = *stack_b;
 	(*stack_b)->next = first;
 	(*stack_b) = second;
 }
@@ -130,12 +141,12 @@ void	rra(t_stack **stack_a)
 	t_stack *new_last;
 
 	ft_printf("rra\n");
-	first = (*stack_a);
-	while ((*stack_a)->next->next != NULL)
-		(*stack_a) = (*stack_a)->next;
-	new_last = (*stack_a);
-	(*stack_a) = (*stack_a)->next;
+	first = *stack_a;
+	*stack_a = stack_last(*stack_a);
+	first->before = *stack_a;
+	new_last = (*stack_a)->before;
 	(*stack_a)->next = first;
+	(*stack_a)->before = NULL;
 	new_last->next = NULL;
 }
 
@@ -144,13 +155,13 @@ void	rrb(t_stack **stack_b)
 	t_stack *first;
 	t_stack *new_last;
 
-	ft_printf("rrb\n");
+	ft_printf("rra\n");
 	first = (*stack_b);
-	while ((*stack_b)->next->next != NULL)
-		(*stack_b) = (*stack_b)->next;
-	new_last = (*stack_b);
-	(*stack_b) = (*stack_b)->next;
+	*stack_b = stack_last(*stack_b);
+	first->before = *stack_b;
+	new_last = (*stack_b)->before;
 	(*stack_b)->next = first;
+	(*stack_b)->before = NULL;
 	new_last->next = NULL;
 }
 

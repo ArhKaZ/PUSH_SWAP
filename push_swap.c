@@ -6,13 +6,12 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/21 11:58:17 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/30 15:30:23 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft/libft.h"
-#include "printf/ft_printf.h"
 
 
 void	print_stack(t_stack *stack)
@@ -36,23 +35,11 @@ void	print_chunk_and_index(t_stack *stack)
 	first = stack;
 		while (stack != NULL)
 		{
-			ft_printf("[%d/%d/%d/%d] ", stack->value, stack->pos_mid, stack->chunk, stack->index_chunk);
+			ft_printf("[%d/%d/%d] ", stack->value, stack->chunk, stack->l_chunk);
 			stack = stack->next;
 		}
 		ft_printf("\n");
 		stack = first;
-}
-
-void	print_tab(int stack[], int len)
-{
-	int i;
-
-	i = 0;
-	while (i < len)
-	{
-		ft_printf("[%d]", stack[i]);
-		i++;
-	}
 }
 
 int	*sort_tab_int(int stack[], int len)
@@ -86,8 +73,10 @@ int		len_stack(t_stack **stack)
 	int len;
 	t_stack *first;
 
-	first = *stack;
 	len = 0;
+	while ((*stack)->before != NULL)
+		*stack = (*stack)->before;
+	first = *stack;
 	while (*stack != NULL)
 	{
 		len++;
@@ -97,62 +86,61 @@ int		len_stack(t_stack **stack)
 	return (len);
 }
 
-void    push_on_b(t_stack **stack_a, t_stack **stack_b)
+t_bool  compare_to_sort_tab(t_stack **stack_a, int sort_tab[], int len)
 {
-    int len;
+    int i;
+    t_stack *first;
 
-    len = len_chunk(*stack_a, *stack_a, (*stack_a)->chunk);
-    if (len == 1)
-        pb(stack_a, stack_b);
+    first = *stack_a;
+    i = 0;
+    while (i < len)
+    {
+        if (sort_tab[i] != (*stack_a)->value) {
+            *stack_a = first;
+            return (false);
+        }
+        i++;
+        *stack_a = (*stack_a)->next;
+    }
+    *stack_a = first;
+    return (true);
+}
+void    sort_little_stack(t_stack **stack_a, t_stack **stack_b, int len)
+{
     if (len == 2)
-    {
-        pb(stack_a, stack_b);
-        pb(stack_a, stack_b);
+        sa(*stack_a);
+    if (len == 3) {
+        return (choose_sort_tec(stack_a));
     }
-    if (len == 3)
-    {
-        pb(stack_a, stack_b);
-        pb(stack_a, stack_b);
-        pb(stack_a, stack_b);
+    if (len == 4)
+        return (sort_four(stack_a, stack_b));
+    if (len <= 5) {
+        sort_five(stack_a, stack_b);
     }
-}
-
-void    sort_first_cat(t_stack **stack_a, t_stack **stack_b)
-{
-    push_on_b(stack_a, stack_b);
-
-}
-void	sort_stack(t_stack **stack_a, t_stack **stack_b, int mid)
-{
-    put_pivot(stack_a, mid);
-    //split_at_mid(stack_a, stack_b);
-    //while (chunk_are_good(*stack_b) != 1)
-        //split_in_chunk(stack_b);
-    while (chunk_are_good(*stack_a) != 1)
-        split_in_chunk(stack_a);
-    print_chunk_and_index(*stack_a);
-    sort_first_cat(stack_a, stack_b);
-    print_chunk_and_index(*stack_b);
 }
 
 void	push_swap(int stack[], int len)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
-	int mid;
-
-	stack_a = NULL;
+    //t_stack *first;
+    stack_a = NULL;
 	stack_b = NULL;
 
 	fill_stack(stack, len, &stack_a);
-	sort_tab_int(stack, len);
-	mid = stack[(len / 2)];
-	sort_stack(&stack_a, &stack_b, mid);
+    sort_tab_int(stack, len);
+    if (!(compare_to_sort_tab(&stack_a, stack, len)))
+    {
+        if (len <= 5)
+            sort_little_stack(&stack_a, &stack_b, len);
+        if (len <= 100)
+            sort_middle_stack(&stack_a, &stack_b, len, stack);
+    }
 }
-
 
 int main(int argc, char **argv)
 {
+
 	int *stack;
 	int i;
 
@@ -163,10 +151,10 @@ int main(int argc, char **argv)
 		if (!stack)
 			return (0);
 		while (i + 1 < argc)
-		{
-			stack[i] = ft_atoi(argv[i + 1]);
-			i++;
-		}
+        {
+            stack[i] = ft_atoi(argv[i + 1]);
+            i++;
+        }
 		push_swap(stack, i);
 	}
 	return (0);
