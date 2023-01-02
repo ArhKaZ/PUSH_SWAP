@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/30 15:07:38 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:34:40 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ void	stack_add_back(t_stack **stack_to, t_stack *new)
 
 void	stack_add_front(t_stack **stack_to, t_stack *new)
 {
+	t_stack *second;
+
+	second = *stack_to;
 	if (!stack_to || !new)
 		return ;
 	if (*stack_to != NULL)
@@ -62,6 +65,7 @@ void	stack_add_front(t_stack **stack_to, t_stack *new)
 		new->before = NULL;
 		new->next = *stack_to;
 		*stack_to = new;
+		second->before = *stack_to;
 	}
 	else
 	{

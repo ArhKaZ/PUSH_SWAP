@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/30 15:30:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:06:49 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void	print_stack(t_stack *stack)
 	t_stack *first;
 
 	first = stack;
+	ft_printf("[");
 		while (stack != NULL)
 		{
 			ft_printf("%d ", stack->value);
 			stack = stack->next;
 		}
-		ft_printf("\n");
+		ft_printf("]\n");
 		stack = first;
 }
 
@@ -35,7 +36,7 @@ void	print_chunk_and_index(t_stack *stack)
 	first = stack;
 		while (stack != NULL)
 		{
-			ft_printf("[%d/%d/%d] ", stack->value, stack->chunk, stack->l_chunk);
+			ft_printf("[%d/%d/%p/%p] ", stack->value, stack->chunk, stack->before, stack->next);
 			stack = stack->next;
 		}
 		ft_printf("\n");

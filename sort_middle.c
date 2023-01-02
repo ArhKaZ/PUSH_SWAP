@@ -248,15 +248,18 @@ int get_max_chunk(t_stack **stack_a, int chunk)
     int max;
     t_stack *first;
 
+    (void)chunk;
     first = *stack_a;
     max = (*stack_a)->value;
     while ((*stack_a) != NULL)
     {
-        if ((*stack_a)->chunk == chunk && (*stack_a)->value > max)
+     //!ft_printf("[%d/%d]", max < (*stack_a)->value, (*stack_a)->chunk == chunk);
+        if (max < (*stack_a)->value)
             max = (*stack_a)->value;
         *stack_a = (*stack_a)->next;
     }
     *stack_a = first;
+    //ft_printf("%d", max);
     return (max);
 }
 
@@ -301,10 +304,13 @@ int     place_middle_down(t_stack **stack_a, int value, int chunk)
 
     first = *stack_a;
     down = 0;
+    while ((*stack_a)->chunk != chunk)
+    {
+        *stack_a = (*stack_a)->next;
+        down++;
+    }
     while (*stack_a != NULL)
     {
-        while ((*stack_a)->chunk != chunk)
-        *stack_a = (*stack_a)->next;
         if (value > (*stack_a)->value && value < (*stack_a)->next->value)
         {
             down++;
@@ -325,12 +331,14 @@ int     place_middle_up(t_stack **stack_a, int value, int chunk)
     first = *stack_a;
     up = 0;
     *stack_a = stack_last(*stack_a);
-    ft_printf("[%d/", value);
+    while ((*stack_a)->chunk != chunk)
+    {
+        *stack_a = (*stack_a)->before;
+        up++;
+    }
     while (*stack_a != NULL)
     {
-        while ((*stack_a)->chunk != chunk)
-            *stack_a = (*stack_a)->before;
-        if (value > (*stack_a)->value && value < (*stack_a)->next->value)
+        if (value < (*stack_a)->value && value > (*stack_a)->before->value)
             break;
         up++;
         *stack_a = (*stack_a)->before;
@@ -349,15 +357,12 @@ int     place_little_down(t_stack **stack_a, int value)
     while (*stack_a != NULL)
     {
         if (value == (*stack_a)->value)
-        {
-            down++;
             break;
-        }
         down++;
         *stack_a = (*stack_a)->next;
     }
     *stack_a = first;
-    return (down);
+    return (down - 1);
 }
 
 int     place_little_up(t_stack **stack_a, int value)
@@ -365,13 +370,9 @@ int     place_little_up(t_stack **stack_a, int value)
     int up;
     t_stack *first;
 
-    //!ft_printf("place little :");
-    //!print_chunk_and_index(*stack_a);
-    //!ft_printf("%d", value);
     first = *stack_a;
     up = 0;
     *stack_a = stack_last(*stack_a);
-    //!ft_printf("value : [%d/%d/%d]\n",value, (*stack_a)->value ,value == (*stack_a)->value);
     while (*stack_a != NULL)
     {
         if (value == (*stack_a)->value)
@@ -389,15 +390,14 @@ void    get_little_on_top(t_stack **stack_a)
     int down;
     int up;
 
-    //!print_chunk_and_index(*stack_a);
     little = get_min(stack_a);
-    down = place_little_up(stack_a, little);
-    up = place_little_down(stack_a, little);
+    down = place_little_down(stack_a, little);
+    up = place_little_up(stack_a, little);
     if (up < down)
     {
         while (up >= 0)
             {
-                ra(stack_a);
+                rra(stack_a);
                 up--;
             }
     }
@@ -405,9 +405,23 @@ void    get_little_on_top(t_stack **stack_a)
     {
         while (down >= 0)
         {
-            rra(stack_a);
+            ra(stack_a);
             down--;
         }
+    }
+}
+
+void  should_place_little(t_stack **stack_a, t_stack **stack_b)
+{
+    t_stack *last;
+    int value;
+
+    if (*stack_b != NULL)
+    {
+        value = (*stack_b)->value;
+        last = stack_last(*stack_a);
+        if (value < (*stack_a)->value && value > last->value)
+            pa(stack_a, stack_b);
     }
 }
 
@@ -418,7 +432,6 @@ void    place_in_the_middle(t_stack **stack_a, t_stack **stack_b)
 
     up = place_middle_up(stack_a, (*stack_b)->value, (*stack_b)->chunk);
     down = place_middle_down(stack_a, (*stack_b)->value,  (*stack_b)->chunk);
-    ft_printf("%d/%d", down, up);
     if (up < down)
     {
         while (up >= 0)
@@ -436,6 +449,7 @@ void    place_in_the_middle(t_stack **stack_a, t_stack **stack_b)
         }
     }
     pa(stack_a, stack_b);
+    should_place_little(stack_a, stack_b);
     get_little_on_top(stack_a);
 }
 
@@ -446,43 +460,27 @@ void    push_back(t_stack **stack_a, t_stack **stack_b)
     chunk = 4;
     while (*stack_b != NULL)
     {
-        ft_printf("\n%d\n", (*stack_b)->value);
-        print_chunk_and_index(*stack_a);
         if (len_chunk(stack_b, chunk) == 0)
         {
             pa(stack_a, stack_b);
-            print_chunk_and_index(*stack_a);
             chunk--;
         }
         if ((*stack_b)->value > get_max_chunk(stack_a, chunk))
         {
             pa(stack_a, stack_b);
-            rra(stack_a);
-            print_chunk_and_index(*stack_a);
+            ra(stack_a);
         }
         else if ((*stack_b)->value < get_min_chunk(stack_a, chunk))
-        {
             pa(stack_a, stack_b);
-            print_chunk_and_index(*stack_a);
-        }
         else
-        {
             place_in_the_middle(stack_a, stack_b);
-            print_chunk_and_index(*stack_a);
-        }
     }
 }
 
 void    sort_middle_stack(t_stack **stack_a, t_stack **stack_b, int len, int sort_tab[])
 {
-    int i;
-
-    i = 0;
     give_chunk(stack_a, len, sort_tab);
-    //give_index(stack_a, len, sort_tab);
     push_to_b(stack_a, stack_b);
-   // print_chunk_and_index(*stack_a);
-   // print_chunk_and_index(*stack_b);
     choose_sort_tec(stack_a);
     push_back(stack_a, stack_b);
 }

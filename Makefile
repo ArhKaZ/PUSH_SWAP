@@ -14,7 +14,13 @@ OBJS_DIR		=	obj/
 
 HEAD			=	push_swap.h
 
-NAME			=	push_swap.a
+NAME			=	push_swap
+
+PRINTF			=	-C printf
+
+LIBFT			=	-C libft
+
+LIB				=	libft/libft.a printf/libftprintf.a
 #==============================================================================
 
 #============================= BASH COMMAND ===================================
@@ -22,22 +28,32 @@ CC				=	cc
 
 FLAG			=	-Wall -Werror -Wextra
 
-ARC				=	ar rc
-
 RM				=	rm -f -r
+
+MAKE			=	make
+
+MAKEALL			=	make all
+
+MAKEFC			=	make fclean
 #==============================================================================
 
 #============================= MK COMMAND =====================================
+
 $(OBJS_DIR)%.o	:	%.c $(HEAD)
 				$(CC) $(FLAG) -c $< -o $@
 
-$(NAME)			:	$(OBJS_DIR) $(HEAD) $(OBJS)
-				$(ARC) $(NAME) $(OBJS)
+$(NAME)			:	compl compp $(OBJS_DIR) $(HEAD) $(OBJS)
+				compl
+				$(CC) $(OBJS) $(LIB) -o $(NAME)
 
 $(OBJS_DIR)		:
 				mkdir -p $(OBJS_DIR)
 
-all				:	$(HEAD) $(MK) $(NAME)
+all				: $(HEAD) $(NAME)
+
+compp			:	$(MAKE) $(PRINTF)
+
+compl			:	$(MAKE) $(LIBFT)
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_DIR)
