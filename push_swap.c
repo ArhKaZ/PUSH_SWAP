@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/21 11:58:17 by syluiset         ###   ########.fr       */
+/*   Updated: 2022/12/22 10:18:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft/libft.h"
+#include "Libft/libft.h"
 #include "printf/ft_printf.h"
 
 
@@ -117,21 +117,48 @@ void    push_on_b(t_stack **stack_a, t_stack **stack_b)
     }
 }
 
-void    sort_first_cat(t_stack **stack_a, t_stack **stack_b)
+int		is_sort(t_stack *stack_a, int sort_tab[])
 {
-    push_on_b(stack_a, stack_b);
+	int i;
+	t_stack *first;
 
+	first = stack_a;
+	i = 0;
+	while (stack_a != NULL)
+	{
+		if (stack_a->value != sort_tab[i])
+		{
+			stack_a = first;
+			return (0);
+		}
+		stack_a = stack_a->next;
+		i++;
+	}
+	return (1);
 }
-void	sort_stack(t_stack **stack_a, t_stack **stack_b, int mid)
+
+void    sort_first_cat(t_stack **stack_a, t_stack **stack_b, int sort_tab[])
+{
+	(void)stack_a;
+	(void)stack_b;
+	(void)sort_tab;
+	// while (is_sort(*stack_a, sort_tab))
+	// {
+    // 	push_on_b(stack_a, stack_b);
+
+	// }
+}
+
+void	sort_stack(t_stack **stack_a, t_stack **stack_b, int mid, int sort_tab[])
 {
     put_pivot(stack_a, mid);
-    //split_at_mid(stack_a, stack_b);
-    //while (chunk_are_good(*stack_b) != 1)
-        //split_in_chunk(stack_b);
+    split_at_mid(stack_a, stack_b);
+    while (chunk_are_good(*stack_b) != 1)
+        split_in_chunk(stack_b);
     while (chunk_are_good(*stack_a) != 1)
         split_in_chunk(stack_a);
     print_chunk_and_index(*stack_a);
-    sort_first_cat(stack_a, stack_b);
+    sort_first_cat(stack_a, stack_b, sort_tab);
     print_chunk_and_index(*stack_b);
 }
 
@@ -147,7 +174,7 @@ void	push_swap(int stack[], int len)
 	fill_stack(stack, len, &stack_a);
 	sort_tab_int(stack, len);
 	mid = stack[(len / 2)];
-	sort_stack(&stack_a, &stack_b, mid);
+	sort_stack(&stack_a, &stack_b, mid, stack);
 }
 
 

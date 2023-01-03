@@ -16,6 +16,7 @@ int		stack_is_split(t_stack **stack)
     *stack = first;
     return (1);
 }
+
 void	split_at_mid(t_stack **stack_a, t_stack **stack_b)
 {
     t_stack *first;
@@ -26,12 +27,21 @@ void	split_at_mid(t_stack **stack_a, t_stack **stack_b)
     while (test == 0)
     {
         if ((*stack_a)->pos_mid == 0)
+        {
             pb(stack_a, stack_b);
+            if (len_stack(stack_b) > 1)
+            {
+                if ((*stack_b)->value < (*stack_b)->next->value)
+                    rb(stack_b);
+            }
+        }
         else
             ra(stack_a);
         test = stack_is_split(stack_a);
     }
+    *stack_a = first;
 }
+
 void	put_pivot(t_stack **stack, int mid)
 {
     t_stack *first;
