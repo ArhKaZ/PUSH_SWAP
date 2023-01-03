@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2023/01/03 12:10:06 by syluiset          #+#    #+#             */
 /*   Updated: 2023/01/03 12:14:08 by syluiset         ###   ########.fr       */
+=======
+/*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/03 11:21:02 by syluiset         ###   ########.fr       */
+>>>>>>> 51e44dc1b152377a17aa23accf75d9a88ecaf91c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +101,3 @@ void	go_on_top(t_stack **stack)
 	while ((*stack)->before != NULL)
 		*stack = (*stack)->before;
 }
-

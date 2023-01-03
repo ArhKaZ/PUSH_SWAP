@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:56 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 19:02:43 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/03 19:08:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ int get_min(t_stack **stack_a)
     return (min);
 }
 
-int     place_middle_down(t_stack **stack_b, int value, int chunk)
+int     place_middle_down(t_stack **stack_a, int value, int chunk)
 {
     int down;
     t_stack *first;
