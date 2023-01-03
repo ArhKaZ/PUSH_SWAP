@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 14:58:42 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/30 15:08:48 by syluiset         ###   ########.fr       */
+/*   Created: 2023/01/03 12:18:31 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/03 12:20:34 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
 # include <stdlib.h>
-#include "printf/ft_printf.h"
+# include "Libft_w_a/libft.h"
+
+typedef enum e_bool
+{
+    false,
+    true
+}              t_bool;
 
 typedef struct s_stack
 {
@@ -24,17 +30,13 @@ typedef struct s_stack
 	struct s_stack	*next;
 }					t_stack;
 
-typedef enum e_bool
-{
-    false,
-    true
-}              t_bool;
-
 void	go_on_top(t_stack **stack);
 
 t_stack	*create_empty_stack(void);
 
 t_stack	*stack_last(t_stack *stack);
+
+int		len_stack(t_stack **stack);
 
 void	stack_add_back(t_stack **stack_a, t_stack *new);
 

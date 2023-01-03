@@ -3,45 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/02 14:06:49 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:33:38 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft/libft.h"
-
-
-void	print_stack(t_stack *stack)
-{
-	t_stack *first;
-
-	first = stack;
-	ft_printf("[");
-		while (stack != NULL)
-		{
-			ft_printf("%d ", stack->value);
-			stack = stack->next;
-		}
-		ft_printf("]\n");
-		stack = first;
-}
-
-void	print_chunk_and_index(t_stack *stack)
-{
-	t_stack *first;
-
-	first = stack;
-		while (stack != NULL)
-		{
-			ft_printf("[%d/%d/%p/%p] ", stack->value, stack->chunk, stack->before, stack->next);
-			stack = stack->next;
-		}
-		ft_printf("\n");
-		stack = first;
-}
 
 int	*sort_tab_int(int stack[], int len)
 {
@@ -124,7 +93,6 @@ void	push_swap(int stack[], int len)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
-    //t_stack *first;
     stack_a = NULL;
 	stack_b = NULL;
 
@@ -141,8 +109,7 @@ void	push_swap(int stack[], int len)
 
 int main(int argc, char **argv)
 {
-
-	int *stack;
+	int	*stack;
 	int i;
 
 	i = 0;

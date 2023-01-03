@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/02 13:34:40 by syluiset         ###   ########.fr       */
+/*   Created: 2023/01/03 12:10:06 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/03 12:14:08 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*create_empty_stack(void)
+t_stack	*create_empty_stack()
 {
 	t_stack *stack_to_return;
 
@@ -96,3 +96,4 @@ void	go_on_top(t_stack **stack)
 	while ((*stack)->before != NULL)
 		*stack = (*stack)->before;
 }
+

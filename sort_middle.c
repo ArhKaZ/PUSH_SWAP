@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sort_middle.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/03 12:09:56 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/03 19:02:43 by syluiset         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void    push_little_in_chunk(t_stack **stack_a,t_stack **stack_b, int chunk)
@@ -81,29 +93,6 @@ t_stack **next_push_to_b(t_stack **stack_a, int chunk)
     return (stack_a);
 }
 
-void    push_to_b(t_stack **stack_a, t_stack **stack_b)
-{
-    t_stack *first;
-    int chunk;
-
-    chunk = 0;
-    first = *stack_a;
-    while (len_stack(stack_a) > 3)
-    {
-        //print_chunk_and_index(*stack_a);
-        if ((*stack_a)->chunk == chunk)
-            pb(stack_a, stack_b);
-        else
-        {
-            if (len_chunk(stack_a, chunk) == 0)
-                chunk++;
-            else
-                //ra(stack_a);
-                stack_a = next_push_to_b(stack_a, chunk);
-        }
-    }
-}
-
 int		len_l_chunk(t_stack **stack, int l_chunk)
 {
     int len;
@@ -119,20 +108,6 @@ int		len_l_chunk(t_stack **stack, int l_chunk)
     }
     *stack = first;
     return (len);
-}
-
-void	print_chunk_and_index_of_chunk(t_stack *stack, int chunk)
-{
-	t_stack *first;
-
-	first = stack;
-		while (stack != NULL && stack->chunk == chunk)
-		{
-			ft_printf("[%d/%d/%d/%d] ", stack->value, stack->chunk, stack->l_chunk);
-			stack = stack->next;
-		}
-		ft_printf("\n");
-		stack = first;
 }
 
 int     get_middle_value(t_stack **stack, int chunk)
@@ -158,6 +133,7 @@ int     get_middle_value(t_stack **stack, int chunk)
     sort_tab_int(tab, value);
     value = tab[value / 2];
     free(tab);
+    *stack = first;
     return (tab[value / 2]);
 }
 
@@ -171,7 +147,7 @@ void    give_chunk(t_stack **stack_a, int len, int sort_tab[])
     first = *stack_a;
     i = 0;
     chunk = 0;
-    len_chunk = len / 5;
+    len_chunk = 20 * len/ 100;
     while (*stack_a != NULL)
     {
         if ((*stack_a)->chunk == -1 && (*stack_a)->value <= sort_tab[len_chunk - 1])
@@ -179,7 +155,7 @@ void    give_chunk(t_stack **stack_a, int len, int sort_tab[])
             (*stack_a)->chunk = chunk;
             i++;
         }
-        if (i == len / 5 && len_chunk + len / 5 <= len) {
+        if (i == 20 * len / 100 && len_chunk + 20 * len / 100 <= len) {
             *stack_a = first;
             len_chunk += len / 5;
             chunk++;
@@ -189,38 +165,8 @@ void    give_chunk(t_stack **stack_a, int len, int sort_tab[])
             *stack_a = (*stack_a)->next;
     }
     *stack_a = first;
+    print_chunk_and_index(*stack_a);
 }
-
-// void    give_index(t_stack **stack_a, int len, int sort_tab[])
-// {
-//     int i;
-//     int j;
-//     int chunk;
-//     t_stack *first;
-
-//     chunk = 0;
-//     j = 0;
-//     first = *stack_a;
-//     while (chunk < 5)
-//     {
-//         i = 0;
-//         while (i < len / 5)
-//         {
-//             if (*stack_a == NULL)
-//                 *stack_a = first;
-//             if ((*stack_a)->value == sort_tab[j])
-//             {
-//                 (*stack_a)->index_chunk = i;
-//                 *stack_a = first;
-//                 j++;
-//                 i++;
-//             }
-//             *stack_a = (*stack_a)->next;
-//         }
-//         *stack_a = first;
-//         chunk++;
-//     }
-// }
 
 int *index_in_tab(t_stack **stack, int chunk)
 {
@@ -253,13 +199,11 @@ int get_max_chunk(t_stack **stack_a, int chunk)
     max = (*stack_a)->value;
     while ((*stack_a) != NULL)
     {
-     //!ft_printf("[%d/%d]", max < (*stack_a)->value, (*stack_a)->chunk == chunk);
         if (max < (*stack_a)->value)
             max = (*stack_a)->value;
         *stack_a = (*stack_a)->next;
     }
     *stack_a = first;
-    //ft_printf("%d", max);
     return (max);
 }
 
@@ -297,7 +241,7 @@ int get_min(t_stack **stack_a)
     return (min);
 }
 
-int     place_middle_down(t_stack **stack_a, int value, int chunk)
+int     place_middle_down(t_stack **stack_b, int value, int chunk)
 {
     int down;
     t_stack *first;
@@ -474,6 +418,41 @@ void    push_back(t_stack **stack_a, t_stack **stack_b)
             pa(stack_a, stack_b);
         else
             place_in_the_middle(stack_a, stack_b);
+    }
+}
+
+void    place_on_chunk(t_stack **stack_a, t_stack **stack_b, int chunk) //?mettre au dessous de la moitier en dessous
+{
+    if ((*stack_a)->value > get_max_chunk(stack_b, chunk))
+            pb(stack_a, stack_b);
+        else if ((*stack_a)->value < get_min_chunk(stack_b, chunk))
+        {
+            pb(stack_a, stack_b);
+            ra(stack_a);
+        }
+        else
+            place_in_the_middle(stack_a, stack_b);
+}
+
+void    push_to_b(t_stack **stack_a, t_stack **stack_b)
+{
+    //!t_stack *first;
+    int chunk;
+
+    chunk = 0;
+    while (len_stack(stack_a) > 3)
+    {
+        //!print_chunk_and_index(*stack_a);
+        if ((*stack_a)->chunk == chunk)
+            place_on_chunk(stack_a, stack_b, chunk);
+        else
+        {
+            if (len_chunk(stack_a, chunk) == 0)
+                chunk++;
+            else
+                //!ra(stack_a);
+                stack_a = next_push_to_b(stack_a, chunk);
+        }
     }
 }
 

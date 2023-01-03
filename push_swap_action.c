@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_action.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 13:34:52 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/02 13:33:05 by syluiset         ###   ########.fr       */
+/*   Created: 2023/01/03 12:10:18 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/03 12:10:30 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "printf/ft_printf.h"
 
 void	sa(t_stack *stack_a)
 {

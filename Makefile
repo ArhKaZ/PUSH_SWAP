@@ -1,12 +1,14 @@
 #============================= FILES PART =====================================
-SRCS			=	push_swap.c \
+SRCS			=	push_swap_action.c \
+					stack_utils.c \
+					give_chunk.c	\
 					sort_five_nb.c \
 					sort_four.c \
 					sort_middle.c \
 					sort_three_nb.c \
-					stack_utils.c \
-					push_swap_action.c \
-					sort_chunk.c \
+					sort_chunk.c		\
+					print.c 			\
+					push_swap.c
 
 OBJS			=	${SRCS:%.c=$(OBJS_DIR)%.o}
 
@@ -16,11 +18,9 @@ HEAD			=	push_swap.h
 
 NAME			=	push_swap
 
-PRINTF			=	-C printf
+LIBFT			=	Libft_w_a
 
-LIBFT			=	-C libft
-
-LIB				=	libft/libft.a printf/libftprintf.a
+LIBA			=	Libft_w_a/libft.a
 #==============================================================================
 
 #============================= BASH COMMAND ===================================
@@ -42,23 +42,24 @@ MAKEFC			=	make fclean
 $(OBJS_DIR)%.o	:	%.c $(HEAD)
 				$(CC) $(FLAG) -c $< -o $@
 
-$(NAME)			:	compl compp $(OBJS_DIR) $(HEAD) $(OBJS)
-				compl
-				$(CC) $(OBJS) $(LIB) -o $(NAME)
+$(NAME)			:	libft $(OBJS_DIR) $(HEAD) $(OBJS)
+				$(CC) $(OBJS) $(LIBA) -o $(NAME)
 
 $(OBJS_DIR)		:
 				mkdir -p $(OBJS_DIR)
 
 all				: $(HEAD) $(NAME)
 
-compp			:	$(MAKE) $(PRINTF)
-
-compl			:	$(MAKE) $(LIBFT)
+libft			:
+				make -C $(LIBFT)
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_DIR)
 
-fclean			:	clean
+cleanlib		:
+				make fclean -C $(LIBFT)
+
+fclean			:	clean cleanlib
 				$(RM) $(NAME)
 
 re				:	fclean $(NAME)
