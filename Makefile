@@ -28,6 +28,8 @@ CC				=	cc
 
 FLAG			=	-Wall -Werror -Wextra
 
+FSA				=	-fsanitize=address -g3
+
 RM				=	rm -f -r
 
 MAKE			=	make
@@ -47,6 +49,9 @@ $(NAME)			:	libft $(OBJS_DIR) $(HEAD) $(OBJS)
 
 $(OBJS_DIR)		:
 				mkdir -p $(OBJS_DIR)
+
+fsanitize		:	libft $(OBJS_DIR) $(HEAD) $(OBJS)
+				$(CC) $(FSA) $(OBJS) $(LIBA) -o $(NAME)
 
 all				: $(HEAD) $(NAME)
 

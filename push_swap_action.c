@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_action.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:10:18 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:10:30 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:52:30 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_stack *stack_a)
+void	sa(t_stack *stack_a, t_list *actions)
 {
 	int temp;
 
@@ -25,7 +25,7 @@ void	sa(t_stack *stack_a)
 	}
 }
 
-void	sb(t_stack *stack_b)
+void	sb(t_stack *stack_b, t_list *actions)
 {
 	int temp;
 
@@ -34,18 +34,18 @@ void	sb(t_stack *stack_b)
 	{
 		temp = stack_b->value;
 		stack_b->value = stack_b->next->value;
-		stack_b->next->value = temp;
+	stack_b->next->value = temp;
 	}
 }
 
-void	ss(t_stack *stack_a, t_stack *stack_b)
+void	ss(t_stack *stack_a, t_stack *stack_b, t_list *actions)
 {
 	ft_printf("ss\n");
-	sa(stack_a);
-	sb(stack_b);
+	sa(stack_a, actions);
+	sb(stack_b, actions);
 }
 
-void	pa(t_stack **stack_a, t_stack **stack_b)
+void	pa(t_stack **stack_a, t_stack **stack_b, t_list *actions)
 {
 	t_stack *first;
 	t_stack *temp;
@@ -66,14 +66,14 @@ void	pa(t_stack **stack_a, t_stack **stack_b)
 		temp->value = (*stack_b)->value;
 		temp->next = NULL;
 		temp->chunk = (*stack_b)->chunk;
-		temp->l_chunk = (*stack_b)->l_chunk;
+		temp->index = (*stack_b)->index;
 		stack_add_front(stack_a, temp);
 		free((*stack_b));
 		(*stack_b) = first;
 	}
 }
 
-void	pb(t_stack **stack_a, t_stack **stack_b)
+void	pb(t_stack **stack_a, t_stack **stack_b, t_list *actions)
 {
 	t_stack *first;
 	t_stack *temp;
@@ -89,14 +89,14 @@ void	pb(t_stack **stack_a, t_stack **stack_b)
 		temp->value = (*stack_a)->value;
 		temp->next = NULL;
         temp->chunk = (*stack_a)->chunk;
-        temp->l_chunk = (*stack_a)->l_chunk;
+        temp->index = (*stack_a)->index;
 		stack_add_front(stack_b, temp);
 		free((*stack_a));
 		(*stack_a) = first;
 	}
 }
 
-void	ra(t_stack **stack_a)
+void	ra(t_stack **stack_a, t_list *actions)
 {
 	t_stack *second;
 	t_stack *first;
@@ -112,7 +112,7 @@ void	ra(t_stack **stack_a)
 	*stack_a = second;
 }
 
-void	rb(t_stack **stack_b)
+void	rb(t_stack **stack_b, t_list *actions)
 {
 	t_stack *second;
 	t_stack *first;
@@ -120,6 +120,7 @@ void	rb(t_stack **stack_b)
 	ft_printf("rb\n");
 	first = (*stack_b);
 	second = (*stack_b)->next;
+	second->before = NULL;
 	(*stack_b) = stack_last(*stack_b);
 	first->next = NULL;
 	first->before = *stack_b;
@@ -127,14 +128,14 @@ void	rb(t_stack **stack_b)
 	(*stack_b) = second;
 }
 
-void	rr(t_stack **stack_a, t_stack **stack_b)
+void	rr(t_stack **stack_a, t_stack **stack_b, t_list *actions)
 {
 	ft_printf("rr\n");
-	ra(stack_a);
-	rb(stack_b);
+	ra(stack_a, actions);
+	rb(stack_b, actions);
 }
 
-void	rra(t_stack **stack_a)
+void	rra(t_stack **stack_a, t_list *actions)
 {
 	t_stack *first;
 	t_stack *new_last;
@@ -149,12 +150,12 @@ void	rra(t_stack **stack_a)
 	new_last->next = NULL;
 }
 
-void	rrb(t_stack **stack_b)
+void	rrb(t_stack **stack_b, t_list *actions)
 {
 	t_stack *first;
 	t_stack *new_last;
 
-	ft_printf("rra\n");
+	ft_printf("rrb\n");
 	first = (*stack_b);
 	*stack_b = stack_last(*stack_b);
 	first->before = *stack_b;
@@ -164,9 +165,9 @@ void	rrb(t_stack **stack_b)
 	new_last->next = NULL;
 }
 
-void	rrr(t_stack **stack_a, t_stack **stack_b)
+void	rrr(t_stack **stack_a, t_stack **stack_b, t_list *actions)
 {
 	ft_printf("rrr\n");
-	rra(stack_a);
-	rrb(stack_b);
+	rra(stack_a, actions);
+	rrb(stack_b, actions);
 }

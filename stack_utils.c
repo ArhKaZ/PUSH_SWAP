@@ -3,15 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
-/*   Created: 2023/01/03 12:10:06 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:14:08 by syluiset         ###   ########.fr       */
-=======
-/*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 11:21:02 by syluiset         ###   ########.fr       */
->>>>>>> 51e44dc1b152377a17aa23accf75d9a88ecaf91c
+/*   Created: 2023/01/04 10:32:24 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/04 16:35:09 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +21,7 @@ t_stack	*create_empty_stack()
 		return (NULL);
 	stack_to_return->value = 0;
 	stack_to_return->chunk = -1;
-	stack_to_return->l_chunk = -1;
+	stack_to_return->index = -1;
 	stack_to_return->next = NULL;
 	return (stack_to_return);
 }
@@ -91,7 +86,7 @@ void	fill_stack(int stack[], int len, t_stack **stack_a)
 		if (!new)
 			return ;
 		new->value = stack[i];
-		stack_add_back(stack_a, new);
+		stack_add_back(*stack_a, new);
 		i++;
 	}
 }

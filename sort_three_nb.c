@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   sort_three_nb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:58 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:09:59 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:21:14 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-void    sort_case_four(t_stack **stack)
+
+void    sort_case_four(t_stack **stack, t_list *actions)
 {
-    sa(*stack);
-    ra(stack);
+    sa(*stack, actions);
+    ra(stack, actions);
 }
 
-void    sort_case_two(t_stack **stack)
+void    sort_case_two(t_stack **stack, t_list *actions)
 {
-    sa(*stack);
-    rra(stack);
+    sa(*stack, actions);
+    rra(stack, actions);
 }
 
-void    choose_sort_tec(t_stack **stack)
+void    choose_sort_tec(t_stack **stack, t_list *actions)
 {
     int tab[3];
     int i;
@@ -39,17 +40,17 @@ void    choose_sort_tec(t_stack **stack)
     if (tab[1] < tab[0] && tab[1] < tab[2])
     {
         if (tab[0] < tab[2])
-            sa(*stack); //case 1
+            sa(*stack, actions); //case 1
         else
-            ra(stack); //case 3
+            ra(stack, actions); //case 3
     }
     if (tab[1] > tab[0] && tab[1] > tab[2])
     {
         if (tab[0] < tab[2])
-            sort_case_four(stack); //case 4
+            sort_case_four(stack, actions); //case 4
         else
-            rra(stack); //case 5
+            rra(stack, actions); //case 5
     }
     if (tab[1] < tab[0] && tab[1] > tab[2])
-        sort_case_two(stack); //case2
+        sort_case_two(stack, actions); //case2
 }

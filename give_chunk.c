@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   give_chunk.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:28:34 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:28:39 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:00:40 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,3 @@ int		len_chunk(t_stack **stack, int chunk)
     return (len);
 }
 
-void	print_tab(int stack[], int len)
-{
-    int i;
-
-    i = 0;
-    while (i < len)
-    {
-        ft_printf("[%d]", stack[i]);
-        i++;
-    }
-}

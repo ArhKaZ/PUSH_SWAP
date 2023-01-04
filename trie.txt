@@ -1,28 +1,3 @@
-Le tri par insertion est un algorithme simple et efficace pour trier des piles
-de petite taille. Il consiste à retirer chaque élément de la pile un par un et
-à les insérer à leur place dans une nouvelle pile triée. Le tri par insertion
-est généralement plus rapide que le tri par sélection, mais moins rapide que le
-tri rapide ou le tri fusion.
-
-Le tri par sélection est un algorithme qui consiste à retirer le minimum de la
-pile à chaque étape et à l'ajouter à la fin d'une nouvelle pile triée.
-Le tri par sélection est généralement plus lent que le tri par insertion,
-mais peut être utilisé lorsque la mémoire est limitée.
-
-Le tri rapide est un algorithme de tri plus complexe qui utilise une approche de
-divide-and-conquer pour trier la pile. Il consiste à sélectionner un élément de la pile
-(appelé pivot) et à répartir les autres éléments de la pile en deux sous-piles en fonction
-de leur valeur relative au pivot. On trie ensuite les deux sous-piles de manière récursive
-en utilisant le même algorithme, jusqu'à ce que la pile soit triée. Le tri rapide est
-généralement plus rapide que les autres algorithmes de tri, mais peut être difficile à implémenter.
-
-Le tri fusion est un algorithme de tri qui utilise une approche de divide-and-conquer
-similaire au tri rapide. Il consiste à diviser la pile en deux sous-piles de taille égale,
-puis à trier chacune des sous-piles de manière récursive en utilisant le même algorithme.
-On fusionne ensuite les deux sous-piles triées pour obtenir la pile triée finale.
-Le tri fusion est généralement plus lent que le tri rapide,
-mais peut être plus facile à implémenter.
-
-algorithme qui permet de trier une pile de nombre a l'aide d'une autre pile,
-de façon optimisé avec comme seuls instructions inversion des deux premiers nombres d'une pile,
-l'envoie du premier nombre d'une pile a l'autre ou le décalage vers le haut ou le bas des piles
+TODO: Fonction static pour libft (printf et gnl)
+Tester fonctionnement
+Mettre actions pour list et change ra + rb en rr

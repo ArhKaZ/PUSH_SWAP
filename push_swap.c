@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 19:07:59 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:17:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,43 +75,47 @@ t_bool  compare_to_sort_tab(t_stack **stack_a, int sort_tab[], int len)
     *stack_a = first;
     return (true);
 }
-void    sort_little_stack(t_stack **stack_a, t_stack **stack_b, int len)
+void    sort_little_stack(t_list_stack *stacks, int len, t_list *actions)
 {
     if (len == 2)
-        sa(*stack_a);
+        sa(stacks->stack_a, actions);
     if (len == 3) {
-        return (choose_sort_tec(stack_a));
+        return (choose_sort_tec(&stacks->stack_a, actions));
     }
     if (len == 4)
-        return (sort_four(stack_a, stack_b));
+        return (sort_four(&stacks->stack_a, &stacks->stack_b, actions));
     if (len <= 5) {
-        sort_five(stack_a, stack_b);
+        sort_five(&stacks->stack_a, &stacks->stack_b, actions);
     }
 }
 
-void	push_swap(int stack[], int len)
+void	push_swap(int stack[], int len, t_list_stack *stacks, t_list *actions)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
     stack_a = NULL;
 	stack_b = NULL;
 
-	fill_stack(stack, len, &stack_a);
+	stacks->stack_a = stack_a;
+	stacks->stack_b = stack_b;
+	fill_stack(stack, len, &stacks->stack_a);
     sort_tab_int(stack, len);
-    if (!(compare_to_sort_tab(&stack_a, stack, len)))
+    if (!(compare_to_sort_tab(&stacks->stack_a, stack, len)))
     {
         if (len <= 5)
-            sort_little_stack(&stack_a, &stack_b, len);
+            sort_little_stack(stacks, len, actions);
         if (len <= 100)
-            sort_middle_stack(&stack_a, &stack_b, len, stack);
+            sort_middle_stack(stacks, len, stack, actions);
     }
+	//faire free_stack
 }
 
 int main(int argc, char **argv)
 {
 	int	*stack;
 	int i;
-
+	t_list_stack *stacks;
+	t_list	*actions;
 	i = 0;
 	if (argc > 1)
 	{
@@ -123,7 +127,14 @@ int main(int argc, char **argv)
             stack[i] = ft_atoi(argv[i + 1]);
             i++;
         }
-		push_swap(stack, i);
+		stacks = malloc(sizeof(t_list_stack));
+		if (!stacks)
+			return (0);
+		actions = malloc(sizeof(t_list));
+		if (!actions)
+			return (0);
+		push_swap(stack, i, stacks, actions);
+		free(stacks);
 	}
 	return (0);
 }
