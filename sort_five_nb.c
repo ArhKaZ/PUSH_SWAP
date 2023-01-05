@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:47 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:09:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:50:13 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,28 @@ int     find_little(t_stack **stack_a)
     return (i);
 }
 
-void    push_little(t_stack **stack_a, t_stack **stack_b)
+void    push_little(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
     int little;
 
     little = find_little(stack_a);
     if (little == 0)
-        return (pb(stack_a, stack_b));
+        return (pb(stack_a, stack_b, actions));
     if (little == 1)
-        return (sa(*stack_a), pb(stack_a, stack_b));
+        return (sa(*stack_a, actions), pb(stack_a, stack_b, actions));
     if (little == 2)
-        return (ra(stack_a), ra(stack_a), pb(stack_a, stack_b));
+        return (ra(stack_a, actions), ra(stack_a, actions), pb(stack_a, stack_b, actions));
     if (little == 3)
-        return (rra(stack_a), rra(stack_a), pb(stack_a, stack_b));
+        return (rra(stack_a, actions), rra(stack_a, actions), pb(stack_a, stack_b, actions));
     if (little == 4)
-        return (rra(stack_a), pb(stack_a, stack_b));
+        return (rra(stack_a, actions), pb(stack_a, stack_b, actions));
 }
 
-void    sort_five(t_stack **stack_a, t_stack **stack_b)
+void    sort_five(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
-    push_little(stack_a, stack_b);
-    push_little(stack_a, stack_b);
-    choose_sort_tec(stack_a);
-    pa(stack_a, stack_b);
-    pa(stack_a, stack_b);
+    push_little(stack_a, stack_b, actions);
+    push_little(stack_a, stack_b, actions);
+    choose_sort_tec(stack_a, actions);
+    pa(stack_a, stack_b, actions);
+    pa(stack_a, stack_b, actions);
 }

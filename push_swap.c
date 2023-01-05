@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 17:17:12 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:59:07 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_bool  compare_to_sort_tab(t_stack **stack_a, int sort_tab[], int len)
     *stack_a = first;
     return (true);
 }
-void    sort_little_stack(t_list_stack *stacks, int len, t_list *actions)
+void    sort_little_stack(t_list_stack *stacks, int len, t_action *actions)
 {
     if (len == 2)
         sa(stacks->stack_a, actions);
@@ -89,7 +89,7 @@ void    sort_little_stack(t_list_stack *stacks, int len, t_list *actions)
     }
 }
 
-void	push_swap(int stack[], int len, t_list_stack *stacks, t_list *actions)
+void	push_swap(int stack[], int len, t_list_stack *stacks, t_action *actions)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
@@ -107,7 +107,11 @@ void	push_swap(int stack[], int len, t_list_stack *stacks, t_list *actions)
         if (len <= 100)
             sort_middle_stack(stacks, len, stack, actions);
     }
-	//faire free_stack
+	print_action_p(actions);
+	ft_printf("\n");
+	actions_to_char(actions);
+	print_action_p(actions);
+	//free_stacks(stacks);
 }
 
 int main(int argc, char **argv)
@@ -115,7 +119,7 @@ int main(int argc, char **argv)
 	int	*stack;
 	int i;
 	t_list_stack *stacks;
-	t_list	*actions;
+	t_action	*actions;
 	i = 0;
 	if (argc > 1)
 	{
@@ -130,11 +134,9 @@ int main(int argc, char **argv)
 		stacks = malloc(sizeof(t_list_stack));
 		if (!stacks)
 			return (0);
-		actions = malloc(sizeof(t_list));
-		if (!actions)
-			return (0);
+		actions = create_empty_list();
 		push_swap(stack, i, stacks, actions);
-		free(stacks);
+		//free(stacks);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:18:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 17:15:16 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:54:30 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ typedef enum e_bool
     false,
     true
 }              t_bool;
+
+typedef struct s_action
+{
+	char	*content;
+	struct s_action *before;
+	struct s_action *next;
+}					t_action;
 
 typedef struct s_stack
 {
@@ -52,37 +59,41 @@ void	stack_add_front(t_stack **stack_to, t_stack *new);
 
 void	fill_stack(int stack[], int len, t_stack **stack_a);
 
-void	sa(t_stack *stack_a, t_list *actions);
+void	sa(t_stack *stack_a, t_action *actions);
 
-void	sb(t_stack *stack_b, t_list *actions);
+void	sb(t_stack *stack_b, t_action *actions);
 
-void	ss(t_stack *stack_a, t_stack *stack_b, t_list *actions);
+void	ss(t_stack *stack_a, t_stack *stack_b, t_action *actions);
 
-void	pa(t_stack **stack_a, t_stack **stack_b, t_list *actions);
+void	pa(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void	pb(t_stack **stack_a, t_stack **stack_b, t_list *actions);
+void	pb(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void	ra(t_stack **stack_a, t_list *actions);
+void	ra(t_stack **stack_a, t_action *actions);
 
-void	rb(t_stack **stack_b, t_list *actions);
+void	rb(t_stack **stack_b, t_action *actions);
 
-void	rr(t_stack **stack_a, t_stack **stack_b, t_list *actions);
+void	rr(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void	rra(t_stack **stack_a, t_list *actions);
+void	rra(t_stack **stack_a, t_action *actions);
 
-void	rrb(t_stack **stack_b, t_list *actions);
+void	rrb(t_stack **stack_b, t_action *actions);
 
-void	rrr(t_stack **stack_a, t_stack **stack_b, t_list *actions);
+void	rrr(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void    choose_sort_tec(t_stack **stack, t_list *actions);
+void    choose_sort_tec(t_stack **stack, t_action *actions);
 
-void    sort_four(t_stack **stack_a, t_stack **stack_b, t_list *actions);
+void    sort_four(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void    sort_five(t_stack **stack_a, t_stack **stack_b, t_list *actions);
+void    sort_five(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void    sort_middle_stack(t_list_stack *stacks, int len, int sort_tab[], t_list *actions);
+void    sort_middle_stack(t_list_stack *stacks, int len, int sort_tab[], t_action *actions);
 
 void	print_stack(t_stack *stack);
+
+void	print_list(t_action *actions);
+
+t_action	*create_empty_list();
 
 void	put_pivot(t_stack **stack, int mid);
 
@@ -104,6 +115,15 @@ void    sort_chunk(t_stack **stack);
 
 void	print_chunk_and_index(t_stack *stack);
 
-void    push_little(t_stack **stack_a, t_stack **stack_b);
+void    push_little(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
+void	add_action_list(t_action **actions, char *content);
+
+void	free_stacks(t_list_stack *stacks);
+
+t_action	*del_one_action(t_action *actions);
+
+char	*actions_to_char(t_action *actions);
+
+void	print_action_p(t_action *actions);
 #endif

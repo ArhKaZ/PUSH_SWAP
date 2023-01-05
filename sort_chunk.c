@@ -6,60 +6,60 @@
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:40 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/03 12:09:41 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:00:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    sort_chunk_2(t_stack **stack, t_stack *first)
-{
-    int tab[2];
-    int i;
+// void    sort_chunk_2(t_stack **stack, t_stack *first)
+// {
+//     int tab[2];
+//     int i;
 
-    i = 0;
-    while (i < 2)
-    {
-        tab[i] = (*stack)->value;
-        i++;
-        *stack = (*stack)->next;
-    }
-    *stack = first;
-    if (tab[0] < tab[1])
-        sb(*stack);
-}
+//     i = 0;
+//     while (i < 2)
+//     {
+//         tab[i] = (*stack)->value;
+//         i++;
+//         *stack = (*stack)->next;
+//     }
+//     *stack = first;
+//     if (tab[0] < tab[1])
+//         sb(*stack);
+// }
 
-void    sort_chunk_3(t_stack **stack, t_stack *first)
-{
-    int tab[3];
-    int i;
+// void    sort_chunk_3(t_stack **stack, t_stack *first)
+// {
+//     int tab[3];
+//     int i;
 
-    i = 0;
-    while (i < 3)
-    {
-        tab[i] = (*stack)->value;
-        i++;
-        *stack = (*stack)->next;
-    }
-    *stack = first;
-    if (tab[1] < tab[0] && tab[1] < tab[2])
-    {
-        if (tab[0] < tab[2])
-            rrb(stack);
-        else
-        {
-            sb(*stack);
-            rb(stack);
-        }
-    }
-    if (tab[1] > tab[0] && tab[1] > tab[2])
-    {
-        if (tab[0] < tab[2])
-            rb(stack);
-        else
-            sb(*stack);
-    }
-}
+//     i = 0;
+//     while (i < 3)
+//     {
+//         tab[i] = (*stack)->value;
+//         i++;
+//         *stack = (*stack)->next;
+//     }
+//     *stack = first;
+//     if (tab[1] < tab[0] && tab[1] < tab[2])
+//     {
+//         if (tab[0] < tab[2])
+//             rrb(stack);
+//         else
+//         {
+//             sb(*stack);
+//             rb(stack);
+//         }
+//     }
+//     if (tab[1] > tab[0] && tab[1] > tab[2])
+//     {
+//         if (tab[0] < tab[2])
+//             rb(stack);
+//         else
+//             sb(*stack);
+//     }
+// }
 
 // void    sort_chunk(t_stack **stack)
 // {

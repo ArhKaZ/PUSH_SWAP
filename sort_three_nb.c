@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   sort_three_nb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:58 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 17:21:14 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:51:11 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    sort_case_four(t_stack **stack, t_list *actions)
+void    sort_case_four(t_stack **stack, t_action *actions)
 {
     sa(*stack, actions);
     ra(stack, actions);
 }
 
-void    sort_case_two(t_stack **stack, t_list *actions)
+void    sort_case_two(t_stack **stack, t_action *actions)
 {
     sa(*stack, actions);
     rra(stack, actions);
 }
 
-void    choose_sort_tec(t_stack **stack, t_list *actions)
+void    choose_sort_tec(t_stack **stack, t_action *actions)
 {
     int tab[3];
     int i;

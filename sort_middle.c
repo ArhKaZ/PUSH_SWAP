@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sort_middle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:56 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 17:20:46 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:50:50 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    push_little_in_chunk(t_stack **stack_a,t_stack **stack_b, int chunk, t_list *actions)
+void    push_little_in_chunk(t_stack **stack_a,t_stack **stack_b, int chunk, t_action *actions)
 {
     t_stack *first;
     int value;
@@ -67,7 +67,7 @@ int     get_nb_move_up(t_stack **stack_a, int chunk)
     return (mouv_up);
 }
 
-t_stack **next_push_to_b(t_stack **stack_a, int chunk, t_list *actions)
+t_stack *next_push_to_b(t_stack **stack_a, int chunk, t_action *actions)
 {
     int mouv_down;
     int mouv_up;
@@ -90,7 +90,7 @@ t_stack **next_push_to_b(t_stack **stack_a, int chunk, t_list *actions)
             rra(stack_a, actions);
         }
     }
-    return (stack_a);
+    return (*stack_a);
 }
 
 int		len_l_chunk(t_stack **stack, int l_chunk)
@@ -298,7 +298,7 @@ int     place_little_up(t_stack **stack_a, int value)
     return (up);
 }
 
-void    get_little_on_top(t_stack **stack_a, t_list *actions)
+void    get_little_on_top(t_stack **stack_a, t_action *actions)
 {
     int little;
     int down;
@@ -307,6 +307,8 @@ void    get_little_on_top(t_stack **stack_a, t_list *actions)
     little = get_min(stack_a);
     down = place_little_down(stack_a, little);
     up = place_little_up(stack_a, little);
+    //!ft_printf("[little :%d/down :%d/up :%d]\n", little, down, up);
+    //!print_stack(*stack_a);
     if (up < down)
     {
         while (up >= 0)
@@ -325,7 +327,7 @@ void    get_little_on_top(t_stack **stack_a, t_list *actions)
     }
 }
 
-void  should_place_little(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void  should_place_little(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
     t_stack *last;
     int value;
@@ -339,7 +341,7 @@ void  should_place_little(t_stack **stack_a, t_stack **stack_b, t_list *actions)
     }
 }
 
-void    place_in_the_middle(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void    place_in_the_middle(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
     int up;
     int down;
@@ -367,7 +369,7 @@ void    place_in_the_middle(t_stack **stack_a, t_stack **stack_b, t_list *action
     get_little_on_top(stack_a, actions);
 }
 
-void    push_back(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void    push_back(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
     int chunk;
 
@@ -393,7 +395,7 @@ void    push_back(t_stack **stack_a, t_stack **stack_b, t_list *actions)
     }
 }
 
-void    place_on_chunk(t_stack **stack_a, t_stack **stack_b, t_list *actions) //?mettre au dessous de la moitier en dessous
+void    place_on_chunk(t_stack **stack_a, t_stack **stack_b, t_action *actions) //?mettre au dessous de la moitier en dessous
 {
     int iter;
     iter = 0;
@@ -440,22 +442,21 @@ void    place_on_chunk(t_stack **stack_a, t_stack **stack_b, t_list *actions) //
     }
 }
 
-void    push_to_b(t_list_stack *stacks, t_list *actions)
+void    push_to_b(t_list_stack *stacks, t_action *actions)
 {
     int chunk;
 
     chunk = 0;
     while (len_stack(&stacks->stack_a) > 3)
     {
+        if (stacks->stack_b == NULL)
+        {
+            get_little_on_top(&stacks->stack_a, actions);
+            pb(&stacks->stack_a, &stacks->stack_b, actions);
+        }
         if ((stacks->stack_a)->chunk == chunk)
         {
-            if (stacks->stack_b == NULL)
-            {
-                get_little_on_top(&stacks->stack_a, actions);
-                pb(&stacks->stack_a, &stacks->stack_b, actions);
-            }
-            else
-                place_on_chunk(&stacks->stack_a, &stacks->stack_b, actions);
+            place_on_chunk(&stacks->stack_a, &stacks->stack_b, actions);
         }
         else
         {
@@ -525,7 +526,7 @@ void    re_index(t_stack **stack_a, int sort_tab[], int len)
     *stack_a = first;
 }
 
-void    sort_middle_stack(t_list_stack *stacks, int len, int sort_tab[], t_list *actions)
+void    sort_middle_stack(t_list_stack *stacks, int len, int sort_tab[], t_action *actions)
 {
     give_chunk(&stacks->stack_a, len, sort_tab);
     re_index(&stacks->stack_a, sort_tab, len);

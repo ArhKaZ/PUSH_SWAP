@@ -8,6 +8,9 @@ SRCS			=	push_swap_action.c \
 					sort_three_nb.c \
 					sort_chunk.c		\
 					print.c 			\
+					free_stack.c 		\
+					opt_actions.c		\
+					action.c			\
 					push_swap.c
 
 OBJS			=	${SRCS:%.c=$(OBJS_DIR)%.o}
@@ -57,6 +60,7 @@ all				: $(HEAD) $(NAME)
 
 libft			:
 				make -C $(LIBFT)
+				make bonus -C $(LIBFT)
 
 clean			:
 				$(RM) $(OBJS) $(OBJS_DIR)

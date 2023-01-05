@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 18:33:41 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 13:01:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:45:46 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ void	print_stack(t_stack *stack)
 		stack = first;
 }
 
+void	print_list(t_action *actions)
+{
+	t_action *first;
+
+	first = actions;
+	while (actions != NULL)
+	{
+		ft_printf("%s", (char *)actions->content);
+		actions = actions->next;
+	}
+	actions = first;
+}
 
 void	print_chunk_and_index(t_stack *stack)
 {

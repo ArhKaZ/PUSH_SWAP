@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_action.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:10:18 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 16:52:30 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:47:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_stack *stack_a, t_list *actions)
+void	sa(t_stack *stack_a, t_action *actions)
 {
 	int temp;
 
-	ft_printf("sa\n");
+	add_action_list(&actions, "sa");
 	if (!(stack_a->next == NULL || stack_a == NULL))
 	{
 		temp = stack_a->value;
@@ -25,11 +25,11 @@ void	sa(t_stack *stack_a, t_list *actions)
 	}
 }
 
-void	sb(t_stack *stack_b, t_list *actions)
+void	sb(t_stack *stack_b, t_action *actions)
 {
 	int temp;
 
-	ft_printf("sb\n");
+	add_action_list(&actions,"sb");
 	if (!(stack_b->next == NULL || stack_b == NULL))
 	{
 		temp = stack_b->value;
@@ -38,19 +38,19 @@ void	sb(t_stack *stack_b, t_list *actions)
 	}
 }
 
-void	ss(t_stack *stack_a, t_stack *stack_b, t_list *actions)
+void	ss(t_stack *stack_a, t_stack *stack_b, t_action *actions)
 {
-	ft_printf("ss\n");
+	add_action_list(&actions,"ss");
 	sa(stack_a, actions);
 	sb(stack_b, actions);
 }
 
-void	pa(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void	pa(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
 	t_stack *first;
 	t_stack *temp;
 
-	ft_printf("pa\n");
+	add_action_list(&actions,"pa");
 	if ((*stack_b)->next != NULL)
 	{
 		first = (*stack_b)->next;
@@ -73,12 +73,12 @@ void	pa(t_stack **stack_a, t_stack **stack_b, t_list *actions)
 	}
 }
 
-void	pb(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void	pb(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
 	t_stack *first;
 	t_stack *temp;
 
-	ft_printf("pb\n");
+	add_action_list(&actions,"pb");
 	first = (*stack_a)->next;
 	first->before = NULL;
 	if (!(*stack_a == NULL))
@@ -96,12 +96,12 @@ void	pb(t_stack **stack_a, t_stack **stack_b, t_list *actions)
 	}
 }
 
-void	ra(t_stack **stack_a, t_list *actions)
+void	ra(t_stack **stack_a, t_action *actions)
 {
 	t_stack *second;
 	t_stack *first;
 
-	ft_printf("ra\n");
+	add_action_list(&actions,"ra");
 	first = (*stack_a);
 	second = (*stack_a)->next;
 	second->before = NULL;
@@ -112,12 +112,12 @@ void	ra(t_stack **stack_a, t_list *actions)
 	*stack_a = second;
 }
 
-void	rb(t_stack **stack_b, t_list *actions)
+void	rb(t_stack **stack_b, t_action *actions)
 {
 	t_stack *second;
 	t_stack *first;
 
-	ft_printf("rb\n");
+	add_action_list(&actions,"rb");
 	first = (*stack_b);
 	second = (*stack_b)->next;
 	second->before = NULL;
@@ -128,19 +128,19 @@ void	rb(t_stack **stack_b, t_list *actions)
 	(*stack_b) = second;
 }
 
-void	rr(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void	rr(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
-	ft_printf("rr\n");
+	add_action_list(&actions,"rr");
 	ra(stack_a, actions);
 	rb(stack_b, actions);
 }
 
-void	rra(t_stack **stack_a, t_list *actions)
+void	rra(t_stack **stack_a, t_action *actions)
 {
 	t_stack *first;
 	t_stack *new_last;
 
-	ft_printf("rra\n");
+	add_action_list(&actions,"rra");
 	first = *stack_a;
 	*stack_a = stack_last(*stack_a);
 	first->before = *stack_a;
@@ -150,12 +150,12 @@ void	rra(t_stack **stack_a, t_list *actions)
 	new_last->next = NULL;
 }
 
-void	rrb(t_stack **stack_b, t_list *actions)
+void	rrb(t_stack **stack_b, t_action *actions)
 {
 	t_stack *first;
 	t_stack *new_last;
 
-	ft_printf("rrb\n");
+	add_action_list(&actions,"rrb");
 	first = (*stack_b);
 	*stack_b = stack_last(*stack_b);
 	first->before = *stack_b;
@@ -165,9 +165,9 @@ void	rrb(t_stack **stack_b, t_list *actions)
 	new_last->next = NULL;
 }
 
-void	rrr(t_stack **stack_a, t_stack **stack_b, t_list *actions)
+void	rrr(t_stack **stack_a, t_stack **stack_b, t_action *actions)
 {
-	ft_printf("rrr\n");
+	add_action_list(&actions,"rrr");
 	rra(stack_a, actions);
 	rrb(stack_b, actions);
 }

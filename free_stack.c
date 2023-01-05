@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   free_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 13:40:27 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/05 16:51:46 by syluiset         ###   ########.fr       */
+/*   Created: 2023/01/05 14:42:34 by syluiset          #+#    #+#             */
+/*   Updated: 2023/01/05 15:03:18 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_lstadd_back(t_list **lst, t_list *new)
+#include "push_swap.h"
+void	stackdelone(t_stack *stack)
 {
-	t_list	*temp;
+	free(stack->before);
+	free(stack->next);
+	free(stack);
+}
 
-	if (!lst || !new)
-		return ;
-	if (*lst != NULL)
+void	free_stack(t_stack **stack)
+{
+	t_stack	*temp;
+	t_stack	*tempnxt;
+
+	tempnxt = *stack;
+	while (temp != NULL)
 	{
-		temp = ft_lstlast(*lst);
-		temp->next = new;
+		temp = tempnxt;
+		tempnxt = temp->next;
+		stackdelone(temp);
 	}
-	else
-		*lst = new;
+	*stack = NULL;
+}
+
+void	free_stacks(t_list_stack *stacks)
+{
+	free_stack(&stacks->stack_a);
+	free_stack(&stacks->stack_b);
 }
