@@ -8,9 +8,11 @@ SRCS			=	push_swap_action.c \
 					sort_three_nb.c \
 					sort_chunk.c		\
 					print.c 			\
-					free_stack.c 		\
+					free_all.c 		\
 					opt_actions.c		\
 					action.c			\
+					get_little.c		\
+					place_on_chunk.c	\
 					push_swap.c
 
 OBJS			=	${SRCS:%.c=$(OBJS_DIR)%.o}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 16:54:26 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/05 18:03:01 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:48:17 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_action	*create_empty_list()
 	list = malloc(sizeof(t_action));
 	if (!list)
 		return (NULL);
-	list->content = NULL;
+	list->content = 'z';
 	list->next = NULL;
 	list->before = NULL;
 	return (list);
@@ -50,14 +50,14 @@ void	ft_action_add_back(t_action **list, t_action *new)
 		*list = new;
 }
 
-t_action	*ft_action_new(void *content)
+t_action	*ft_action_new(char content)
 {
 	t_action	*element;
 
 	element = malloc(sizeof(t_action));
 	if (!element)
 		return (NULL);
-	element->content = ft_strdup(content);
+	element->content = content;
 	element->next = NULL;
 	element->before = NULL;
 	return (element);
@@ -71,7 +71,6 @@ t_action	*del_one_action(t_action *actions)
 	before = actions->before;
 	next = actions->next;
 
-	free(actions->content);
 	free(actions);
 	before->next = next;
 	next->before = before;
@@ -79,12 +78,12 @@ t_action	*del_one_action(t_action *actions)
 	return (actions);
 }
 
-void	add_action_list(t_action **actions, char *content)
+void	add_action_list(t_action **actions, char content)
 {
 	t_action *new;
 
-	if ((*actions)->content == NULL)
-		(*actions)->content = ft_strdup(content);
+	if ((*actions)->content == 'z')
+		(*actions)->content = content;
 	else
 	{
 		new = ft_action_new(content);

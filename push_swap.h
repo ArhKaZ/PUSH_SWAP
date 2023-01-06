@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:18:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/05 18:54:30 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:44:10 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_bool
 
 typedef struct s_action
 {
-	char	*content;
+	char			content;
 	struct s_action *before;
 	struct s_action *next;
 }					t_action;
@@ -42,6 +42,18 @@ typedef	struct s_list_stack
 	t_stack	*stack_a;
 	t_stack *stack_b;
 }				t_list_stack;
+
+# define SA 'a'
+# define SB 'b'
+# define SS 'c'
+# define PA 'd'
+# define PB 'e'
+# define RA 'f'
+# define RB 'g'
+# define RR 'h'
+# define RRA 'i'
+# define RRB 'j'
+# define RRR 'k'
 
 void	print_tab(int stack[], int len);
 
@@ -117,7 +129,7 @@ void	print_chunk_and_index(t_stack *stack);
 
 void    push_little(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
-void	add_action_list(t_action **actions, char *content);
+void	add_action_list(t_action **actions, char content);
 
 void	free_stacks(t_list_stack *stacks);
 
@@ -126,4 +138,28 @@ t_action	*del_one_action(t_action *actions);
 char	*actions_to_char(t_action *actions);
 
 void	print_action_p(t_action *actions);
+
+void	free_action(t_action **actions);
+
+void    get_little_on_top(t_stack **stack_a, t_action *actions);
+
+int     place_little_up(t_stack **stack_a, int value);
+
+int     place_little_down(t_stack **stack_a, int value);
+
+void  should_place_little(t_stack **stack_a, t_stack **stack_b, t_action *actions);
+
+int		get_less_action_little(t_stack **stack_a);
+
+int     get_less_action_chunk(t_stack **stack_a, int chunk);
+
+int get_min(t_stack **stack_a);
+
+void	place_on_chunk_odd(t_stack **stack_a, t_stack **stack_b, t_action *actions);
+
+void	place_on_chunk_even(t_stack **stack_a, t_stack **stack_b, t_action *actions);
+
+void	repeat_x_time(t_stack **stack, t_action *actions, void (*action)(t_stack **, t_action *), int time);
+
+void	actiondelone(t_action *action);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/05 18:59:07 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:07:57 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ int	*sort_tab_int(int stack[], int len)
 		i++;
 	}
 	return (stack);
+}
+
+void	repeat_x_time(t_stack **stack, t_action *actions, void (*action)(t_stack **, t_action *), int time)
+{
+	while (time > 0)
+	{
+		action(stack, actions);
+		time--;
+	}
 }
 
 int		len_stack(t_stack **stack)
@@ -104,14 +113,12 @@ void	push_swap(int stack[], int len, t_list_stack *stacks, t_action *actions)
     {
         if (len <= 5)
             sort_little_stack(stacks, len, actions);
-        if (len <= 100)
+    	else
+		//(len <= 100)
             sort_middle_stack(stacks, len, stack, actions);
-    }
-	print_action_p(actions);
-	ft_printf("\n");
-	actions_to_char(actions);
-	print_action_p(actions);
-	//free_stacks(stacks);
+    };
+	ft_printf("%s", actions_to_char(actions));
+	free_stacks(stacks);
 }
 
 int main(int argc, char **argv)
@@ -136,7 +143,6 @@ int main(int argc, char **argv)
 			return (0);
 		actions = create_empty_list();
 		push_swap(stack, i, stacks, actions);
-		//free(stacks);
 	}
 	return (0);
 }
