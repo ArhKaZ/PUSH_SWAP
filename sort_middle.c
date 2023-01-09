@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:09:56 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/06 15:29:13 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:46:57 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,7 +370,7 @@ void    give_chunk(t_stack **stack_a, int len, int sort_tab[])
     first = *stack_a;
     i = 0;
     chunk = 0;
-    len_chunk = 20 * len/ 100;
+    len_chunk = len / 5;
     while (*stack_a != NULL)
     {
         if ((*stack_a)->chunk == -1 && (*stack_a)->value <= sort_tab[len_chunk - 1])
@@ -378,10 +378,10 @@ void    give_chunk(t_stack **stack_a, int len, int sort_tab[])
             (*stack_a)->chunk = chunk;
             i++;
         }
-        if (i == 20 * len / 100 && len_chunk + 20 * len / 100 <= len)
+        if (i == len / 5 && len_chunk + len / 5 <= len)
         {
             *stack_a = first;
-            len_chunk += 20 * len / 100;
+            len_chunk += len / 5;
             chunk++;
             i = 0;
         }
@@ -401,7 +401,7 @@ void    give_chunk_big(t_stack **stack_a, int len, int sort_tab[])
     first = *stack_a;
     i = 0;
     chunk = 0;
-    len_chunk = 10 * len/ 100;
+    len_chunk = len / 10;
     while (*stack_a != NULL)
     {
         if ((*stack_a)->chunk == -1 && (*stack_a)->value <= sort_tab[len_chunk - 1])
@@ -409,10 +409,10 @@ void    give_chunk_big(t_stack **stack_a, int len, int sort_tab[])
             (*stack_a)->chunk = chunk;
             i++;
         }
-        if (i == 10 * len / 100 && len_chunk + 10 * len / 100 <= len)
+        if (i == len / 10 && len_chunk + len / 10 <= len)
         {
             *stack_a = first;
-            len_chunk += 10 * len / 100;
+            len_chunk += len / 10;
             chunk++;
             i = 0;
         }

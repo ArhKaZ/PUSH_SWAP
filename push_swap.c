@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/06 15:07:57 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:47:12 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int main(int argc, char **argv)
 	i = 0;
 	if (argc > 1)
 	{
+		checking(argc, argv);
 		stack = malloc(sizeof(int) * argc);
 		if (!stack)
 			return (0);

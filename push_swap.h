@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:18:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/06 14:44:10 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:46:48 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,4 +162,6 @@ void	place_on_chunk_even(t_stack **stack_a, t_stack **stack_b, t_action *actions
 void	repeat_x_time(t_stack **stack, t_action *actions, void (*action)(t_stack **, t_action *), int time);
 
 void	actiondelone(t_action *action);
+
+void	checking(int argc, char **argv);
 #endif

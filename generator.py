@@ -5,8 +5,8 @@ import random
 
 
 length = int(sys.argv[1]) if len(sys.argv) == 2 else 5
-int_min = -10000
-int_max = 10000
+int_min = -100
+int_max = 100
 
 makefile_cmd = 'make'
 checker_path = 'checker_Mac'
