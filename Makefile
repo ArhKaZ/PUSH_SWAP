@@ -13,6 +13,7 @@ SRCS			=	push_swap_action.c \
 					action.c			\
 					get_little.c		\
 					place_on_chunk.c	\
+					check_entry.c		\
 					push_swap.c
 
 OBJS			=	${SRCS:%.c=$(OBJS_DIR)%.o}

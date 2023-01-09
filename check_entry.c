@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:42:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/04 16:06:35 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:49:55 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_bool	all_is_digit(int argc, char **argv)
 t_bool	all_is_int(int argc, char **argv)
 {
 	int i;
-	int j;
 	int len;
 
 	i = 0;
@@ -64,7 +63,7 @@ t_bool	nb_in_double(int argc, char **argv)
 {
 	int i;
 	int j;
-	int len;
+	size_t len;
 
 	i = 0;
 	while (i < argc)
