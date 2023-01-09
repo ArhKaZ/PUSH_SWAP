@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:42:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/09 17:27:30 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 18:00:06 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ t_bool	all_is_digit(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
+		ft_printf("%s", argv[i]);
 		len = ft_strlen(argv[i]);
 		j = 0;
 		if (argv[i][0] == '-')
 			j++;
 		while (j < len)
 		{
+			if (argv[i][j] == ' ')
+				j++;
 			if (ft_isdigit(argv[i][j]) != 1)
 				return (false);
 			j++;
@@ -48,6 +51,72 @@ t_bool	compare_nb(char *argv)
 		return (false);
 }
 
+int		nb_space(char *argv)
+{
+	int count;
+	int i;
+
+	i = 0;
+	count = 0;
+	while (argv[i])
+	{
+		if (argv[i] == ' ')
+			count++;
+		i++;
+	}
+	return (count);
+}
+int		*get_nb(char *argv, int len)
+{
+	int i;
+	int	*tab;
+	int j;
+
+	i = 0;
+	tab = malloc(sizeof(int) * len);
+	i = 0;
+	j = 0;
+	while (argv[i])
+	{
+		if (argv[i] == ' ')
+			j++;
+		tab[j] = tab[j] * 10 + argv[i] - '0';
+		i++;
+	}
+	return (tab);
+}
+
+t_bool	is_space(char *argv)
+{
+	int i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i] == ' ')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+t_bool	check_multiple_nb(char *argv)
+{
+	int *tab;
+	int len;
+
+	len = nb_space(argv);
+	tab = get_nb(argv, len);
+	print_tab(tab, len);
+	while (len >= 0)
+	{
+		if (compare_nb(ft_itoa(tab[len - 1])) == false)
+			return (false);
+		len--;
+	}
+	return (true);
+}
+
 t_bool	all_is_int(int argc, char **argv)
 {
 	int i;
@@ -56,13 +125,20 @@ t_bool	all_is_int(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
+		if (is_space(argv[i]) == true)
+		{
+			return (check_multiple_nb(argv[i]));
+		}
 		len = ft_strlen(argv[i]);
 		if (len > 11 || (len == 11 && argv[i][0] != '-'))
 			return (false);
-		if (len >= 10 )
+		else
 		{
-			if (compare_nb(argv[i]) == false)
-				return (false);
+			if (len >= 10)
+			{
+				if (compare_nb(argv[i]) == false)
+					return (false);
+			}
 		}
 		i++;
 	}
@@ -96,9 +172,18 @@ t_bool	nb_in_double(int argc, char **argv)
 void	checking(int argc, char **argv)
 {
 	if (all_is_digit(argc, argv) == false)
+	{
+		ft_printf("1");
 		return (ft_putstr_fd("Error\n", 2), exit(EXIT_FAILURE));
+	}
 	if (all_is_int(argc, argv) == false)
+	{
+		ft_printf("2");
 		return (ft_putstr_fd("Error\n", 2), exit(EXIT_FAILURE));
+	}
 	if (nb_in_double(argc, argv) == false)
+	{
+		ft_printf("3");
 		return (ft_putstr_fd("Error\n", 2), exit(EXIT_FAILURE));
+	}
 }

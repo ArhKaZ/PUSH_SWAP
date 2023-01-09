@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/09 17:16:17 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:29:23 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void	push_swap(int stack[], int len, t_list_stack *stacks, t_action *actions)
         if (len <= 5)
             sort_little_stack(stacks, len, actions);
     	else
-		//(len <= 100)
             sort_middle_stack(stacks, len, stack, actions);
     };
 	ft_printf("%s", actions_to_char(actions));
