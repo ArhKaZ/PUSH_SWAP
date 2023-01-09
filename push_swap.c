@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/09 16:47:12 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:16:17 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,11 @@ void    sort_little_stack(t_list_stack *stacks, int len, t_action *actions)
 {
     if (len == 2)
         sa(stacks->stack_a, actions);
-    if (len == 3) {
+    else if (len == 3)
         return (choose_sort_tec(&stacks->stack_a, actions));
-    }
-    if (len == 4)
+    else if (len == 4)
         return (sort_four(&stacks->stack_a, &stacks->stack_b, actions));
-    if (len <= 5) {
+    else if (len <= 5) {
         sort_five(&stacks->stack_a, &stacks->stack_b, actions);
     }
 }

@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:42:51 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/09 16:49:55 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:27:30 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_bool	all_is_digit(int argc, char **argv)
 	{
 		len = ft_strlen(argv[i]);
 		j = 0;
+		if (argv[i][0] == '-')
+			j++;
 		while (j < len)
 		{
 			if (ft_isdigit(argv[i][j]) != 1)
@@ -32,26 +34,34 @@ t_bool	all_is_digit(int argc, char **argv)
 	}
 	return (true);
 }
+t_bool	compare_nb(char *argv)
+{
+	int arg;
+	char *arg_c;
+
+	arg_c = malloc(sizeof(char) * 11);
+	arg = ft_atoi(argv);
+	arg_c = ft_itoa(arg);
+	if (ft_strncmp(arg_c, argv, 10) == 0)
+		return (true);
+	else
+		return (false);
+}
 
 t_bool	all_is_int(int argc, char **argv)
 {
 	int i;
 	int len;
 
-	i = 0;
+	i = 1;
 	while (i < argc)
 	{
 		len = ft_strlen(argv[i]);
 		if (len > 11 || (len == 11 && argv[i][0] != '-'))
 			return (false);
-		if (len == 11)
+		if (len >= 10 )
 		{
-			if (ft_strncmp(argv[i], "-2147483648", len) > 0)
-				return (false);
-		}
-		else
-		{
-			if (ft_strncmp(argv[i], "2147483647", len) > 0)
+			if (compare_nb(argv[i]) == false)
 				return (false);
 		}
 		i++;
