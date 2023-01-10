@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 10:32:24 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/05 16:54:44 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:53:23 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,4 @@ void	fill_stack(int stack[], int len, t_stack **stack_a)
 		stack_add_back(stack_a, new);
 		i++;
 	}
-}
-
-void	go_on_top(t_stack **stack)
-{
-	while ((*stack)->before != NULL)
-		*stack = (*stack)->before;
 }

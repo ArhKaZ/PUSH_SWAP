@@ -6,84 +6,24 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:54:10 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/09 17:29:23 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:56:35 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	*sort_tab_int(int stack[], int len)
+void    sort_middle_stack(t_list_stack *stacks, int len, int sort_tab[], t_action *actions)
 {
-	int i;
-	int j;
-	int temp;
-
-	i = 0;
-	while (i < len)
-	{
-		j = 0;
-		while (j < len)
-		{
-			if (stack[j] > stack[i])
-			{
-				temp = stack[j];
-				stack[j] = stack[i];
-				stack[i] = temp;
-			}
-			else
-				j++;
-		}
-		i++;
-	}
-	return (stack);
+    if (len > 100)
+        give_chunk_big(&stacks->stack_a, len, sort_tab);
+    else
+        give_chunk(&stacks->stack_a, len, sort_tab);
+    re_index(&stacks->stack_a, sort_tab, len);
+    push_to_b(stacks, actions);
+    choose_sort_tec(&stacks->stack_a, actions);
+    push_back(&stacks->stack_a, &stacks->stack_b, actions);
 }
 
-void	repeat_x_time(t_stack **stack, t_action *actions, void (*action)(t_stack **, t_action *), int time)
-{
-	while (time > 0)
-	{
-		action(stack, actions);
-		time--;
-	}
-}
-
-int		len_stack(t_stack **stack)
-{
-	int len;
-	t_stack *first;
-
-	len = 0;
-	while ((*stack)->before != NULL)
-		*stack = (*stack)->before;
-	first = *stack;
-	while (*stack != NULL)
-	{
-		len++;
-		*stack = (*stack)->next;
-	}
-	*stack = first;
-	return (len);
-}
-
-t_bool  compare_to_sort_tab(t_stack **stack_a, int sort_tab[], int len)
-{
-    int i;
-    t_stack *first;
-
-    first = *stack_a;
-    i = 0;
-    while (i < len)
-    {
-        if (sort_tab[i] != (*stack_a)->value) {
-            *stack_a = first;
-            return (false);
-        }
-        i++;
-        *stack_a = (*stack_a)->next;
-    }
-    *stack_a = first;
-    return (true);
-}
 void    sort_little_stack(t_list_stack *stacks, int len, t_action *actions)
 {
     if (len == 2)
@@ -92,18 +32,20 @@ void    sort_little_stack(t_list_stack *stacks, int len, t_action *actions)
         return (choose_sort_tec(&stacks->stack_a, actions));
     else if (len == 4)
         return (sort_four(&stacks->stack_a, &stacks->stack_b, actions));
-    else if (len <= 5) {
+    else if (len == 5) {
         sort_five(&stacks->stack_a, &stacks->stack_b, actions);
     }
 }
 
-void	push_swap(int stack[], int len, t_list_stack *stacks, t_action *actions)
+void	push_swap(int stack[], int len, t_list_stack *stacks)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
+	t_action	*actions;
     stack_a = NULL;
 	stack_b = NULL;
 
+	actions = create_empty_list();
 	stacks->stack_a = stack_a;
 	stacks->stack_b = stack_b;
 	fill_stack(stack, len, &stacks->stack_a);
@@ -116,32 +58,25 @@ void	push_swap(int stack[], int len, t_list_stack *stacks, t_action *actions)
             sort_middle_stack(stacks, len, stack, actions);
     };
 	ft_printf("%s", actions_to_char(actions));
-	free_stacks(stacks);
 }
+
 
 int main(int argc, char **argv)
 {
-	int	*stack;
-	int i;
+	int len;
+	int *stack;
 	t_list_stack *stacks;
-	t_action	*actions;
-	i = 0;
+
+	len = 0;
 	if (argc > 1)
 	{
 		checking(argc, argv);
-		stack = malloc(sizeof(int) * argc);
-		if (!stack)
-			return (0);
-		while (i + 1 < argc)
-        {
-            stack[i] = ft_atoi(argv[i + 1]);
-            i++;
-        }
+		stack = get_arg(argc, argv, &len);
 		stacks = malloc(sizeof(t_list_stack));
 		if (!stacks)
 			return (0);
-		actions = create_empty_list();
-		push_swap(stack, i, stacks, actions);
+		push_swap(stack, len, stacks);
+		free_stacks(stacks);
 	}
 	return (0);
 }

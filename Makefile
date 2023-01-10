@@ -14,6 +14,11 @@ SRCS			=	push_swap_action.c \
 					get_little.c		\
 					place_on_chunk.c	\
 					check_entry.c		\
+					get_arg.c			\
+					push_swap_utils.c	\
+					sort_middle_utils.c	\
+					place_in_the_middle.c	\
+					next_push_to_b.c	\
 					push_swap.c
 
 OBJS			=	${SRCS:%.c=$(OBJS_DIR)%.o}

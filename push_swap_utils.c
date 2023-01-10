@@ -3,118 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syluiset <syluiset@student42.fr>           +#+  +:+       +#+        */
+/*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:01:26 by syluiset          #+#    #+#             */
-/*   Updated: 2022/12/09 21:05:54 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:55:15 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "libft/libft.h"
 
-void	sa(t_stack *stack_a)
+int	*sort_tab_int(int stack[], int len)
 {
+	int i;
+	int j;
 	int temp;
 
-	if (!(stack_a->next == NULL || stack_a == NULL))
+	i = 0;
+	while (i < len)
 	{
-		temp = stack_a->value;
-		stack_a->value = stack_a->next->value;
-		stack_a->next->value = temp;
+		j = 0;
+		while (j < len)
+		{
+			if (stack[j] > stack[i])
+			{
+				temp = stack[j];
+				stack[j] = stack[i];
+				stack[i] = temp;
+			}
+			else
+				j++;
+		}
+		i++;
+	}
+	return (stack);
+}
+
+void	repeat_x_time(t_stack **stack, t_action *actions, void (*action)(t_stack **, t_action *), int time)
+{
+	while (time > 0)
+	{
+		action(stack, actions);
+		time--;
 	}
 }
 
-void	sb(t_stack *stack_b)
+int		len_stack(t_stack **stack)
 {
-	int temp;
+	int len;
+	t_stack *first;
 
-	if (!(stack_b->next == NULL || stack_b == NULL))
+	len = 0;
+	while ((*stack)->before != NULL)
+		*stack = (*stack)->before;
+	first = *stack;
+	while (*stack != NULL)
 	{
-		temp = stack_b->value;
-		stack_b->value = stack_b->next->value;
-		stack_b->next->value = temp;
+		len++;
+		*stack = (*stack)->next;
 	}
+	*stack = first;
+	return (len);
 }
 
-void	ss(t_stack *stack_a, t_stack *stack_b)
+t_bool  compare_to_sort_tab(t_stack **stack_a, int sort_tab[], int len)
 {
-	sa(stack_a);
-	sb(stack_b);
-}
+    int i;
+    t_stack *first;
 
-void	pa(t_stack *stack_a, t_stack *stack_b)
-{
-	if (!(stack_b == NULL))
-	{
-		stack_a->value = stack_b->value;
-		free(stack_b);
-	}
-}
-
-void	pa(t_stack *stack_a, t_stack *stack_b)
-{
-	if (!(stack_a == NULL))
-	{
-		stack_b->value = stack_a->value;
-		free(stack_a);
-	}
-}
-
-void	ra(t_stack *stack_a)
-{
-	t_stack *second;
-	t_stack *first;
-
-	first = stack_a;
-	second = stack_a->next;
-	while (stack_a->next != NULL)
-		stack_a = stack_a->next;
-	stack_a->next = second;
-	first->next = NULL;
-}
-
-void	rb(t_stack *stack_b)
-{
-	t_stack *second;
-	t_stack *first;
-
-	first = stack_b;
-	second = stack_b->next;
-	while (stack_b->next != NULL)
-		stack_b = stack_b->next;
-	stack_b->next = second;
-	first->next = NULL;
-}
-
-void	rr(t_stack *stack_a, t_stack *stack_b)
-{
-	ra(stack_a);
-	rb(stack_b);
-}
-
-void	rra(t_stack *stack_a)
-{
-	t_stack *first;
-
-	first = stack_a;
-	while (stack_a->next != NULL)
-		stack_a = stack_a->next;
-	stack_a->next = first;
-}
-
-void	rrb(t_stack *stack_b)
-{
-	t_stack *first;
-
-	first = stack_b;
-	while (stack_b->next != NULL)
-		stack_b = stack_b->next;
-	stack_b->next = first;
-}
-
-void	rrr(t_stack *stack_a, t_stack *stack_b)
-{
-	rra(stack_a);
-	rrb(stack_b);
+    first = *stack_a;
+    i = 0;
+    while (i < len)
+    {
+        if (sort_tab[i] != (*stack_a)->value) {
+            *stack_a = first;
+            return (false);
+        }
+        i++;
+        *stack_a = (*stack_a)->next;
+    }
+    *stack_a = first;
+    return (true);
 }

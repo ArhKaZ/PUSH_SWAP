@@ -6,7 +6,7 @@
 /*   By: syluiset <syluiset@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 12:18:31 by syluiset          #+#    #+#             */
-/*   Updated: 2023/01/09 16:46:48 by syluiset         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:12:47 by syluiset         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,23 @@ typedef	struct s_list_stack
 
 void	print_tab(int stack[], int len);
 
-void	go_on_top(t_stack **stack);
+void    place_on_chunk(t_stack **stack_a, t_stack **stack_b, t_action *actions);
+
+void    give_chunk(t_stack **stack_a, int len, int sort_tab[]);
+
+void    give_chunk_big(t_stack **stack_a, int len, int sort_tab[]);
+
+void    re_index(t_stack **stack_a, int sort_tab[], int len);
+
+void    push_back(t_stack **stack_a, t_stack **stack_b, t_action *actions);
+
+void    push_to_b(t_list_stack *stacks, t_action *actions);
+
+t_bool  compare_to_sort_tab(t_stack **stack_a, int sort_tab[], int len);
+
+void    place_in_the_middle(t_stack **stack_a, t_stack **stack_b, t_action *actions);
+
+t_stack *next_push_to_b(t_stack **stack_a, int chunk, t_action *actions);
 
 t_stack	*create_empty_stack(void);
 
@@ -153,8 +169,6 @@ int		get_less_action_little(t_stack **stack_a);
 
 int     get_less_action_chunk(t_stack **stack_a, int chunk);
 
-int get_min(t_stack **stack_a);
-
 void	place_on_chunk_odd(t_stack **stack_a, t_stack **stack_b, t_action *actions);
 
 void	place_on_chunk_even(t_stack **stack_a, t_stack **stack_b, t_action *actions);
@@ -164,4 +178,8 @@ void	repeat_x_time(t_stack **stack, t_action *actions, void (*action)(t_stack **
 void	actiondelone(t_action *action);
 
 void	checking(int argc, char **argv);
+
+int		nb_space(char *argv);
+
+int		*get_arg(int argc, char **argv, int *len);
 #endif
